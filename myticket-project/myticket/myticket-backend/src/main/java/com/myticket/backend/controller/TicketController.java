@@ -4,6 +4,7 @@ import com.myticket.backend.model.Ticket;
 import com.myticket.backend.model.User;
 import com.myticket.backend.repository.TicketRepository;
 import com.myticket.backend.repository.UserRepository;
+import com.myticket.backend.service.SeatBroadcastService;
 import com.myticket.backend.service.TicketService;
 import com.myticket.common.dto.BookingRequest;
 import com.myticket.common.dto.TicketResponse;
@@ -34,11 +35,13 @@ public class TicketController {
     private final TicketService ticketService;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
+    private final SeatBroadcastService seatBroadcastService;
 
-    public TicketController(TicketService ticketService, TicketRepository ticketRepository, UserRepository userRepository) {
+    public TicketController(TicketService ticketService, TicketRepository ticketRepository, UserRepository userRepository, SeatBroadcastService seatBroadcastService) {
         this.ticketService = ticketService;
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
+        this.seatBroadcastService = seatBroadcastService;
     }
 
     private User getCurrentUser(UserDetails userDetails) {
@@ -115,6 +118,10 @@ public class TicketController {
         ticket.setStatus(TicketStatus.USED);
         ticket.setUsedAt(LocalDateTime.now());
         ticketRepository.save(ticket);
+        
+        int checkedIn = (int) ticketRepository.countByEventIdAndStatus(ticket.getEvent().getId(), TicketStatus.USED);
+        int total = ticket.getEvent().getTotalCapacity();
+        seatBroadcastService.broadcastAttendanceUpdate(ticket.getEvent().getId(), checkedIn, total, ticket.getAttendeeName(), ticket.getTier().getName());
         
         return ResponseEntity.ok(ticketService.mapToResponse(ticket));
     }

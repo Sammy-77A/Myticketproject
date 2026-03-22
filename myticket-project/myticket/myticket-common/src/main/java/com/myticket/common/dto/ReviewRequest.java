@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewRequest {
 
+    private int starRating;
+
     @NotBlank
     private String body;
 }

@@ -4,6 +4,7 @@ import com.myticket.backend.model.*;
 import com.myticket.backend.repository.*;
 import com.myticket.common.dto.*;
 import com.myticket.common.enums.EventStatus;
+import com.myticket.common.enums.NotificationType;
 import com.myticket.common.enums.Role;
 import com.myticket.common.enums.TicketStatus;
 import org.springframework.data.domain.Page;
@@ -29,12 +30,14 @@ public class EventService {
     private final EmailService emailService;
     private final AuditLogService auditLogService;
     private final TicketTierService ticketTierService;
+    private final NotificationService notificationService;
 
     public EventService(EventRepository eventRepository, TicketTierRepository ticketTierRepository,
                         UserRepository userRepository, CategoryRepository categoryRepository,
                         TicketRepository ticketRepository, SubscriberRepository subscriberRepository,
                         ReactionRepository reactionRepository, EmailService emailService,
-                        AuditLogService auditLogService, TicketTierService ticketTierService) {
+                        AuditLogService auditLogService, TicketTierService ticketTierService,
+                        NotificationService notificationService) {
         this.eventRepository = eventRepository;
         this.ticketTierRepository = ticketTierRepository;
         this.userRepository = userRepository;
@@ -45,6 +48,7 @@ public class EventService {
         this.emailService = emailService;
         this.auditLogService = auditLogService;
         this.ticketTierService = ticketTierService;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -100,7 +104,12 @@ public class EventService {
             emailService.sendNewsletterAlert(sub.getEmail(), savedEvent.getTitle(), savedEvent.getEventDate().toString(), savedEvent.getVenue());
         }
 
-        // TODO Phase 6 — inject NotificationService here and call createNotification(followerId, NEW_EVENT_FROM_FOLLOWED, ...) for each follower.
+        // Notify followers of new event
+        List<User> followers = userRepository.findFollowersOf(organizer.getId());
+        for (User follower : followers) {
+            notificationService.createNotification(follower.getId(), NotificationType.NEW_EVENT_FROM_FOLLOWED,
+                    "New event from " + organizer.getFullName() + ": " + savedEvent.getTitle(), savedEvent.getId());
+        }
         
         return savedEvent;
     }
@@ -145,6 +154,8 @@ public class EventService {
             List<Ticket> bookedTickets = ticketRepository.findByEventIdAndStatus(id, TicketStatus.BOOKED);
             for (Ticket ticket : bookedTickets) {
                 emailService.sendEventUpdate(ticket.getUser().getEmail(), ticket.getUser().getFullName(), event.getTitle(), "Venue or date has changed. Please check the latest event details.");
+                notificationService.createNotification(ticket.getUser().getId(), NotificationType.VENUE_CHANGED,
+                        "Event \"" + event.getTitle() + "\" has changed venue or date. Check details.", event.getId());
             }
         }
 
@@ -171,7 +182,8 @@ public class EventService {
         List<Ticket> bookedTickets = ticketRepository.findByEventIdAndStatus(id, TicketStatus.BOOKED);
         for (Ticket ticket : bookedTickets) {
             emailService.sendCancellationNotice(ticket.getUser().getEmail(), ticket.getUser().getFullName(), event.getTitle());
-            // TODO Phase 6: save in-app Notification for each user
+            notificationService.createNotification(ticket.getUser().getId(), NotificationType.EVENT_CANCELLED,
+                    "Event \"" + event.getTitle() + "\" has been cancelled.", event.getId());
         }
 
         auditLogService.log(actorId, actor.getRole().name(), "CANCEL_EVENT", "Event", event.getId(), "Event cancelled");
@@ -220,6 +232,10 @@ public class EventService {
                 .tiers(tierResponses)
                 .reactionCounts(reactionCounts)
                 .remainingCapacity(remainingCapacity)
+                .shareUrl("https://myticket.app/events/" + event.getId())
+                .whatsAppShareUrl("https://wa.me/?text=" + java.net.URLEncoder.encode(event.getTitle() + " - https://myticket.app/events/" + event.getId(), java.nio.charset.StandardCharsets.UTF_8))
+                .twitterShareUrl("https://twitter.com/intent/tweet?text=" + java.net.URLEncoder.encode(event.getTitle(), java.nio.charset.StandardCharsets.UTF_8) + "&url=" + java.net.URLEncoder.encode("https://myticket.app/events/" + event.getId(), java.nio.charset.StandardCharsets.UTF_8))
+                .facebookShareUrl("https://www.facebook.com/sharer/sharer.php?u=" + java.net.URLEncoder.encode("https://myticket.app/events/" + event.getId(), java.nio.charset.StandardCharsets.UTF_8))
                 .build();
     }
 

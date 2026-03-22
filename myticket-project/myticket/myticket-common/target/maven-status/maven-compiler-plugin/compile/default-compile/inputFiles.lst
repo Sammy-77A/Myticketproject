@@ -1,4 +1,5 @@
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\AnalyticsOverviewResponse.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\AttendanceUpdateMessage.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\AuthResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\BookingRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\CommentRequest.java
@@ -13,6 +14,7 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\RegisterRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\ReviewRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\ReviewResponse.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\SeatUpdateMessage.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\TicketResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\TicketTierRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\TicketTierResponse.java

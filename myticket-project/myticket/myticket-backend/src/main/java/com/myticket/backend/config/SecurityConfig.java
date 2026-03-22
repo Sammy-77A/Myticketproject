@@ -46,7 +46,8 @@ public class SecurityConfig {
                     "/api/images/**").permitAll()
                 .requestMatchers(
                     "/api/auth/**", 
-                    "/api/subscribe", 
+                    "/api/subscribe",
+                    "/api/unsubscribe",
                     "/api/waitlist/claim").permitAll()
                 .anyRequest().authenticated()
             )

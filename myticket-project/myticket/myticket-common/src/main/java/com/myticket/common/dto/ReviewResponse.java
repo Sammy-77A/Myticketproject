@@ -13,8 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ReviewResponse {
     private Long id;
+    private int starRating;
     private String body;
     private String authorName;
     private Long authorId;
+    private String eventTitle;
     private LocalDateTime createdAt;
 }

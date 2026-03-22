@@ -33,4 +33,8 @@ public class EventResponse {
     private List<TicketTierResponse> tiers;
     private long reactionCounts;
     private int remainingCapacity;
+    private String shareUrl;
+    private String whatsAppShareUrl;
+    private String twitterShareUrl;
+    private String facebookShareUrl;
 }

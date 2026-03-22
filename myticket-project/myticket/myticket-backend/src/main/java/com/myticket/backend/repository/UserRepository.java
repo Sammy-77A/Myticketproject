@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     long countFollowers(@org.springframework.data.repository.query.Param("organizerId") Long organizerId);
 
     java.util.List<User> findByReferredBy(Long referrerId);
+
+    @org.springframework.data.jpa.repository.Query("SELECT u FROM User u JOIN u.following f WHERE f.id = :organizerId")
+    java.util.List<User> findFollowersOf(@org.springframework.data.repository.query.Param("organizerId") Long organizerId);
 }

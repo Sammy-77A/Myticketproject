@@ -31,6 +31,14 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     java.util.Optional<Ticket> findByIdWithPessimisticWrite(@org.springframework.data.repository.query.Param("id") Long id);
 
     List<Ticket> findByEventId(Long eventId);
+
+    long countByUserId(Long userId);
+
+    List<Ticket> findByEventIdAndUserIdAndStatus(Long eventId, Long userId, TicketStatus status);
+
+    @Query("SELECT DISTINCT t.event.id FROM Ticket t WHERE t.user.id = :userId AND t.status = 'BOOKED'")
+    java.util.Set<Long> findBookedEventIdsByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT DISTINCT t.event.category.id FROM Ticket t WHERE t.user.id = :userId AND t.status = 'BOOKED' AND t.event.category IS NOT NULL")
+    java.util.Set<Long> findBookedCategoryIdsByUserId(@Param("userId") Long userId);
 }
-
-

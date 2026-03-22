@@ -30,4 +30,6 @@ public class Subscriber {
 
     @CreationTimestamp
     private LocalDateTime subscribedAt;
+
+    private String unsubscribeToken;
 }

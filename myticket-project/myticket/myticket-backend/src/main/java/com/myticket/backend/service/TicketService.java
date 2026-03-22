@@ -11,7 +11,9 @@ import com.myticket.backend.repository.UserRepository;
 import com.myticket.common.dto.BookingRequest;
 import com.myticket.common.dto.PaymentResponse;
 import com.myticket.common.dto.TicketResponse;
+import com.myticket.common.enums.NotificationType;
 import com.myticket.common.enums.TicketStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,12 +34,18 @@ public class TicketService {
     private final EmailService emailService;
     private final AuditLogService auditLogService;
     private final EventService eventService;
+    private final NotificationService notificationService;
+    private final SeatBroadcastService seatBroadcastService;
+
+    // Setter-injected to avoid circular dependency
+    private WaitlistService waitlistService;
 
     public TicketService(TicketRepository ticketRepository, EventRepository eventRepository,
                          TicketTierRepository tierRepository, UserRepository userRepository,
                          QrCodeService qrCodeService, PaymentService paymentService,
                          EmailService emailService, AuditLogService auditLogService,
-                         EventService eventService) {
+                         EventService eventService, NotificationService notificationService,
+                         SeatBroadcastService seatBroadcastService) {
         this.ticketRepository = ticketRepository;
         this.eventRepository = eventRepository;
         this.tierRepository = tierRepository;
@@ -47,6 +55,13 @@ public class TicketService {
         this.emailService = emailService;
         this.auditLogService = auditLogService;
         this.eventService = eventService;
+        this.notificationService = notificationService;
+        this.seatBroadcastService = seatBroadcastService;
+    }
+
+    @Autowired
+    public void setWaitlistService(WaitlistService waitlistService) {
+        this.waitlistService = waitlistService;
     }
 
     @Transactional
@@ -126,7 +141,14 @@ public class TicketService {
             tierRepository.save(tier);
             eventRepository.save(event);
 
+            int remaining = tier.getCapacity() - tier.getTicketsSold();
+            seatBroadcastService.broadcastSeatUpdate(event.getId(), tier.getId(), remaining, tier.getCapacity());
+
             auditLogService.logAction(user.getEmail(), "TICKET_BOOKED", "Booked " + req.getQuantity() + " free tickets for event " + event.getId());
+
+            notificationService.createNotification(userId, NotificationType.BOOKING_CONFIRMED,
+                    "Your booking for " + event.getTitle() + " is confirmed!", event.getId());
+
             return responses;
         }
     }
@@ -164,6 +186,9 @@ public class TicketService {
         event.setTicketsSold(event.getTicketsSold() + quantity);
         tierRepository.save(tier);
         eventRepository.save(event);
+
+        int remaining = tier.getCapacity() - tier.getTicketsSold();
+        seatBroadcastService.broadcastSeatUpdate(event.getId(), tier.getId(), remaining, tier.getCapacity());
 
         auditLogService.logAction(user.getEmail(), "TICKET_BOOKED", "Paid and confirmed " + quantity + " tickets for event " + event.getId());
     }
@@ -212,6 +237,11 @@ public class TicketService {
         ticketRepository.save(newTicket);
 
         emailService.sendTransferNotice(recipient.getEmail(), recipient.getFullName(), ticket.getEvent().getTitle());
+
+        notificationService.createNotification(recipient.getId(), NotificationType.TICKET_TRANSFERRED,
+                "You received a ticket for " + ticket.getEvent().getTitle() + " from " + ticket.getUser().getFullName(),
+                ticket.getEvent().getId());
+
         auditLogService.logAction(ticket.getUser().getEmail(), "TICKET_TRANSFERRED", "Transferred ticket " + ticketId + " to " + recipientEmail);
     }
 
@@ -237,9 +267,15 @@ public class TicketService {
         tierRepository.save(tier);
         eventRepository.save(event);
 
+        int remaining = tier.getCapacity() - tier.getTicketsSold();
+        seatBroadcastService.broadcastSeatUpdate(event.getId(), tier.getId(), remaining, tier.getCapacity());
+
         emailService.sendCancellationNotice(ticket.getUser().getEmail(), ticket.getUser().getFullName(), event.getTitle());
 
-        // TODO Phase 6 — waitlistService.notifyNextInLine(eventId, tierId)
+        // Notify next person on waitlist that a slot is available
+        if (waitlistService != null) {
+            waitlistService.notifyNextInLine(event.getId(), tier.getId());
+        }
 
         auditLogService.logAction(ticket.getUser().getEmail(), "TICKET_CANCELLED", "Cancelled ticket " + ticketId);
     }

@@ -3,12 +3,15 @@ package com.myticket.backend.controller;
 import com.myticket.backend.model.User;
 import com.myticket.backend.repository.UserRepository;
 import com.myticket.backend.service.ReferralService;
+import com.myticket.backend.service.ReviewService;
+import com.myticket.common.dto.ReviewResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,10 +20,12 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final ReferralService referralService;
+    private final ReviewService reviewService;
 
-    public UserController(UserRepository userRepository, ReferralService referralService) {
+    public UserController(UserRepository userRepository, ReferralService referralService, ReviewService reviewService) {
         this.userRepository = userRepository;
         this.referralService = referralService;
+        this.reviewService = reviewService;
     }
 
     private User getCurrentUser(UserDetails userDetails) {
@@ -52,5 +57,12 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getReferralStats(@AuthenticationPrincipal UserDetails userDetails) {
         User user = getCurrentUser(userDetails);
         return ResponseEntity.ok(referralService.getReferralStats(user.getId()));
+    }
+
+    @GetMapping("/me/reviews")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<ReviewResponse>> getMyReviews(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = getCurrentUser(userDetails);
+        return ResponseEntity.ok(reviewService.getUserReviews(user.getId()));
     }
 }
