@@ -1,0 +1,132 @@
+﻿[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] MyTicket ù Campus Event Management                                 [pom]
+[INFO] MyTicket ù Common                                                  [jar]
+[INFO] MyTicket ù Backend                                                 [jar]
+[INFO] MyTicket ù Desktop                                                 [jar]
+[INFO] 
+[INFO] -----------------------< com.myticket:myticket >------------------------
+[INFO] Building MyTicket ù Campus Event Management 1.0.0-SNAPSHOT         [1/4]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ myticket ---
+[INFO] 
+[INFO] --------------------< com.myticket:myticket-common >--------------------
+[INFO] Building MyTicket ù Common 1.0.0-SNAPSHOT                          [2/4]
+[INFO]   from myticket-common\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ myticket-common ---
+[INFO] Deleting C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ myticket-common ---
+[INFO] skip non existing resourceDirectory C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ myticket-common ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 26 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] -------------------< com.myticket:myticket-backend >--------------------
+[INFO] Building MyTicket ù Backend 1.0.0-SNAPSHOT                         [3/4]
+[INFO]   from myticket-backend\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ myticket-backend ---
+[INFO] Deleting C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ myticket-backend ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ myticket-backend ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 60 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,37] cannot find symbol
+  symbol:   method getIsEarlyBird()
+  location: variable tier of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,83] cannot find symbol
+  symbol:   method getIsExpired()
+  location: variable tier of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[73,42] bad operand types for binary operator '!='
+  first type:  int
+  second type: <nulltype>
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[129,28] cannot find symbol
+  symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+  location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[168,24] cannot find symbol
+  symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+  location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[215,24] cannot find symbol
+  symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+  location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[244,24] cannot find symbol
+  symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+  location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[INFO] 7 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for MyTicket ù Campus Event Management 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] MyTicket ù Campus Event Management ................. SUCCESS [  0.199 s]
+[INFO] MyTicket ù Common .................................. SUCCESS [  5.613 s]
+[INFO] MyTicket ù Backend ................................. FAILURE [  8.526 s]
+[INFO] MyTicket ù Desktop ................................. SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.014 s
+[INFO] Finished at: 2026-03-22T09:35:27+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project myticket-backend: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,37] cannot find symbol
+[ERROR]   symbol:   method getIsEarlyBird()
+[ERROR]   location: variable tier of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,83] cannot find symbol
+[ERROR]   symbol:   method getIsExpired()
+[ERROR]   location: variable tier of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[73,42] bad operand types for binary operator '!='
+[ERROR]   first type:  int
+[ERROR]   second type: <nulltype>
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[129,28] cannot find symbol
+[ERROR]   symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[168,24] cannot find symbol
+[ERROR]   symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[215,24] cannot find symbol
+[ERROR]   symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[244,24] cannot find symbol
+[ERROR]   symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)
+[ERROR]   location: variable auditLogService of type com.myticket.backend.service.AuditLogService
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :myticket-backend

@@ -10,9 +10,11 @@ com\myticket\backend\model\Comment$CommentBuilder.class
 com\myticket\backend\model\User$UserBuilder.class
 com\myticket\backend\model\Waitlist.class
 com\myticket\backend\repository\AuditLogRepository.class
+com\myticket\backend\controller\TicketController.class
 com\myticket\backend\service\AuthService.class
 com\myticket\backend\service\TicketTierService.class
 com\myticket\backend\repository\UserRepository.class
+com\myticket\backend\service\MockPaymentService.class
 com\myticket\backend\controller\AuthController.class
 com\myticket\backend\model\AuditLog.class
 com\myticket\backend\model\User.class
@@ -21,7 +23,11 @@ com\myticket\backend\config\SchedulingConfig.class
 com\myticket\backend\model\Subscriber.class
 com\myticket\backend\model\Reaction$ReactionBuilder.class
 com\myticket\backend\service\HCaptchaService.class
+com\myticket\backend\controller\PaymentController.class
 com\myticket\backend\model\Category.class
+com\myticket\backend\service\QrCodeService.class
+com\myticket\backend\controller\UserController.class
+com\myticket\backend\service\MockPaymentService$MockDetails.class
 com\myticket\backend\repository\EventRepository.class
 com\myticket\backend\model\Category$CategoryBuilder.class
 com\myticket\backend\service\FileStorageService.class
@@ -29,10 +35,13 @@ com\myticket\backend\config\WebMvcConfig.class
 com\myticket\backend\controller\HealthController.class
 com\myticket\backend\model\Reaction.class
 com\myticket\backend\model\TicketTier$TicketTierBuilder.class
+com\myticket\backend\service\DarajaPaymentService.class
 com\myticket\backend\model\Ticket$TicketBuilder.class
+com\myticket\backend\service\ReferralService.class
 com\myticket\backend\service\SmtpEmailService.class
 com\myticket\backend\model\Performer.class
 com\myticket\backend\controller\EventController.class
+com\myticket\backend\service\PaymentService.class
 com\myticket\backend\model\Comment.class
 com\myticket\backend\MyTicketApplication.class
 com\myticket\backend\service\EventService.class
@@ -42,6 +51,7 @@ com\myticket\backend\model\UserInterest$UserInterestBuilder.class
 com\myticket\backend\repository\NotificationRepository.class
 com\myticket\backend\model\Event.class
 com\myticket\backend\security\JwtFilter.class
+com\myticket\backend\service\TicketService.class
 com\myticket\backend\model\Waitlist$WaitlistBuilder.class
 com\myticket\backend\repository\SubscriberRepository.class
 com\myticket\backend\service\MockCaptchaService.class

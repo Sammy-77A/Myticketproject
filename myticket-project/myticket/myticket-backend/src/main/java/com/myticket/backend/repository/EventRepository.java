@@ -28,4 +28,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     org.springframework.data.domain.Page<Event> findByCategoryIdAndStatus(Long categoryId, EventStatus status, Pageable pageable);
 
     org.springframework.data.domain.Page<Event> findByStatus(EventStatus status, Pageable pageable);
+
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @org.springframework.data.jpa.repository.Query("SELECT e FROM Event e WHERE e.id = :id")
+    java.util.Optional<com.myticket.backend.model.Event> findByIdWithPessimisticWrite(@org.springframework.data.repository.query.Param("id") Long id);
 }

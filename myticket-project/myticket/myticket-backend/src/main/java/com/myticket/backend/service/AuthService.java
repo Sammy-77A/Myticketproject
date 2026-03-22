@@ -29,6 +29,7 @@ public class AuthService {
     private final UserDetailsService userDetailsService;
     private final EmailService emailService;
     private final CaptchaService captchaService;
+    private final ReferralService referralService;
 
     // In-memory token store for email verification demo
     private final Map<String, String> verificationTokens = new ConcurrentHashMap<>();
@@ -39,7 +40,8 @@ public class AuthService {
                        AuthenticationManager authenticationManager,
                        UserDetailsService userDetailsService,
                        EmailService emailService,
-                       CaptchaService captchaService) {
+                       CaptchaService captchaService,
+                       ReferralService referralService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -47,6 +49,7 @@ public class AuthService {
         this.userDetailsService = userDetailsService;
         this.emailService = emailService;
         this.captchaService = captchaService;
+        this.referralService = referralService;
     }
 
     @Transactional
@@ -85,6 +88,10 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+
+        if (req.getReferralCode() != null && !req.getReferralCode().isBlank()) {
+            referralService.applyReferral(req.getReferralCode(), user.getId());
+        }
 
         String verifyToken = UUID.randomUUID().toString();
         verificationTokens.put(verifyToken, user.getEmail());

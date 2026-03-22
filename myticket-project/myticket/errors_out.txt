@@ -1,0 +1,20 @@
+﻿[ERROR] COMPILATION ERROR : 
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,37] cannot find symbol
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,83] cannot find symbol
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[73,42] bad operand types for binary operator '!='
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[129,28] cannot find symbol
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[168,24] cannot find symbol
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[215,24] cannot find symbol
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[244,24] cannot find symbol
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project myticket-backend: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,37] cannot find symbol
+[ERROR]   symbol:   method getIsEarlyBird()
+[ERROR]   location: variable tier of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[69,83] cannot find symbol
+[ERROR]   symbol:   method getIsExpired()
+[ERROR]   location: variable tier of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[73,42] bad operand types for binary operator '!='
+[ERROR]   first type:  int
+[ERROR]   second type: <nulltype>
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/TicketService.java:[129,28] cannot find symbol
+[ERROR]   symbol:   method logAction(java.lang.String,java.lang.String,java.lang.String)

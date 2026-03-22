@@ -27,4 +27,10 @@ public class AuditLogService {
         
         auditLogRepository.save(auditLog);
     }
+
+    @Transactional
+    public void logAction(String actorEmail, String action, String detail) {
+        log(null, actorEmail, action, null, null, detail);
+    }
 }
+

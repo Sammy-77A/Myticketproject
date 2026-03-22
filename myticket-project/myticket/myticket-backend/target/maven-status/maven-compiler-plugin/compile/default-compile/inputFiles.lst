@@ -7,6 +7,9 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backen
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\EventController.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\HealthController.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\OrganizerController.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\PaymentController.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\TicketController.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\UserController.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\AuditLog.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Category.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Comment.java
@@ -41,11 +44,17 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backen
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\AuditLogService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\AuthService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\CaptchaService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\DarajaPaymentService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\EmailService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\EventService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\FileStorageService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\HCaptchaService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\MockCaptchaService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\MockEmailService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\MockPaymentService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\PaymentService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\QrCodeService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\ReferralService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\SmtpEmailService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\TicketService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\TicketTierService.java
