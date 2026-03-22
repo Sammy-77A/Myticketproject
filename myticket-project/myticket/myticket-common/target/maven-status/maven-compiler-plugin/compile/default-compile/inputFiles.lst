@@ -1,3 +1,6 @@
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\analytics\AttendanceReportResponse.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\analytics\EventAnalyticsResponse.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\analytics\SystemOverviewResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\AnalyticsOverviewResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\AttendanceUpdateMessage.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\AuthResponse.java
@@ -25,4 +28,8 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\enums\Role.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\enums\TicketStatus.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\enums\WaitlistStatus.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\exception\AgeRestrictionException.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\exception\ClaimExpiredException.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\exception\ReturnWindowClosedException.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\exception\TicketSoldOutException.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\package-info.java

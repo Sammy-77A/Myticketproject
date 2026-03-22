@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
+    List<Comment> findByEventIdAndParentIsNullOrderByCreatedAtDesc(Long eventId);
+
+    void deleteByEventId(Long eventId);
+
     List<Comment> findByEventIdAndParentIsNullOrderByCreatedAtAsc(Long eventId);
 
     List<Comment> findByParentIdOrderByCreatedAtAsc(Long parentId);

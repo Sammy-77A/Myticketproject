@@ -30,6 +30,7 @@ public class AuthService {
     private final EmailService emailService;
     private final CaptchaService captchaService;
     private final ReferralService referralService;
+    private final AuditLogService auditLogService;
 
     // In-memory token store for email verification demo
     private final Map<String, String> verificationTokens = new ConcurrentHashMap<>();
@@ -41,7 +42,8 @@ public class AuthService {
                        UserDetailsService userDetailsService,
                        EmailService emailService,
                        CaptchaService captchaService,
-                       ReferralService referralService) {
+                       ReferralService referralService,
+                       AuditLogService auditLogService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -50,6 +52,7 @@ public class AuthService {
         this.emailService = emailService;
         this.captchaService = captchaService;
         this.referralService = referralService;
+        this.auditLogService = auditLogService;
     }
 
     @Transactional
@@ -97,6 +100,7 @@ public class AuthService {
         verificationTokens.put(verifyToken, user.getEmail());
 
         emailService.sendVerificationEmail(user.getEmail(), user.getFullName(), verifyToken);
+        auditLogService.log(user.getId(), user.getEmail(), "USER_REGISTERED", "User", user.getId(), "User registered");
     }
 
     @Transactional
@@ -111,6 +115,7 @@ public class AuthService {
         
         user.setVerified(true);
         userRepository.save(user);
+        auditLogService.log(user.getId(), user.getEmail(), "EMAIL_VERIFIED", "User", user.getId(), "Email verified");
     }
 
     public AuthResponse login(LoginRequest req) {
@@ -127,6 +132,8 @@ public class AuthService {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         String token = jwtUtil.generateToken(userDetails, user.getRole(), user.getId());
+
+        auditLogService.log(user.getId(), user.getEmail(), "USER_LOGIN", "User", user.getId(), "User logged in");
 
         return AuthResponse.builder()
                 .token(token)
@@ -156,5 +163,16 @@ public class AuthService {
                 .role(user.getRole())
                 .userId(user.getId())
                 .build();
+    }
+
+    @Transactional
+    public void changePassword(String email, String oldPassword, String newPassword) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        if (!passwordEncoder.matches(oldPassword, user.getPasswordHash())) {
+            throw new IllegalArgumentException("Incorrect old password");
+        }
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        auditLogService.logAction(user.getEmail(), "PASSWORD_CHANGED", "User changed their password");
     }
 }

@@ -19,10 +19,12 @@ public class ClaimExpiryJob {
 
     private final WaitlistRepository waitlistRepository;
     private final WaitlistService waitlistService;
+    private final AuditLogService auditLogService;
 
-    public ClaimExpiryJob(WaitlistRepository waitlistRepository, WaitlistService waitlistService) {
+    public ClaimExpiryJob(WaitlistRepository waitlistRepository, WaitlistService waitlistService, AuditLogService auditLogService) {
         this.waitlistRepository = waitlistRepository;
         this.waitlistService = waitlistService;
+        this.auditLogService = auditLogService;
     }
 
     @Scheduled(fixedRate = 300000)
@@ -32,6 +34,7 @@ public class ClaimExpiryJob {
         for (Waitlist entry : expired) {
             entry.setStatus(WaitlistStatus.EXPIRED);
             waitlistRepository.save(entry);
+            auditLogService.logAction(entry.getUser().getEmail(), "WAITLIST_EXPIRED", "Waitlist claim expired for event " + entry.getEvent().getId());
 
             log.info("Expired unclaimed waitlist slot {} for event {}, tier {}",
                     entry.getId(), entry.getEvent().getId(), entry.getTier().getId());

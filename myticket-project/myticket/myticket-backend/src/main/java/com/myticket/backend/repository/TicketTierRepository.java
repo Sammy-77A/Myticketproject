@@ -12,6 +12,8 @@ public interface TicketTierRepository extends JpaRepository<TicketTier, Long> {
 
     List<TicketTier> findByEventId(Long eventId);
 
+    void deleteByEventId(Long eventId);
+
     List<TicketTier> findByEventIdAndClosesAtAfter(Long eventId, LocalDateTime now);
 
     List<TicketTier> findByIsEarlyBirdTrueAndIsExpiredFalseAndClosesAtBefore(LocalDateTime now);

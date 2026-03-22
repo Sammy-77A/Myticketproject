@@ -28,4 +28,8 @@ public interface WaitlistRepository extends JpaRepository<Waitlist, Long> {
     List<Waitlist> findByUserIdOrderByJoinedAtDesc(Long userId);
 
     List<Waitlist> findByStatusAndClaimExpiresAtBefore(WaitlistStatus status, LocalDateTime now);
+
+    long countByStatus(WaitlistStatus status);
+
+    void deleteByEventId(Long eventId);
 }

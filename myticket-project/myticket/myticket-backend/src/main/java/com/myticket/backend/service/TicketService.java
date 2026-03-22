@@ -74,11 +74,11 @@ public class TicketService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (tier.getTicketsSold() + req.getQuantity() > tier.getCapacity()) {
-            throw new IllegalStateException("Not enough tickets left in this tier");
+            throw new com.myticket.common.exception.TicketSoldOutException("Not enough tickets left in this tier");
         }
 
         if (!eventService.checkAgeEligibility(userId, event.getId())) {
-            throw new IllegalStateException("User does not meet age requirements (Must be 18+)");
+            throw new com.myticket.common.exception.AgeRestrictionException("User does not meet age requirements (Must be 18+)");
         }
 
         if (tier.isEarlyBird() && tier.isExpired()) {
@@ -256,7 +256,7 @@ public class TicketService {
         TicketTier tier = ticket.getTier();
 
         if (event.getEventDate().minusHours(24).isBefore(LocalDateTime.now())) {
-            throw new IllegalStateException("Return window has closed");
+            throw new com.myticket.common.exception.ReturnWindowClosedException("Return window has closed");
         }
 
         ticket.setStatus(TicketStatus.CANCELLED);

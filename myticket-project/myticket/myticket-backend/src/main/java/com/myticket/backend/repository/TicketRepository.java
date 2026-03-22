@@ -41,4 +41,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     @Query("SELECT DISTINCT t.event.category.id FROM Ticket t WHERE t.user.id = :userId AND t.status = 'BOOKED' AND t.event.category IS NOT NULL")
     java.util.Set<Long> findBookedCategoryIdsByUserId(@Param("userId") Long userId);
+
+    List<Ticket> findByBookedAtBetweenAndStatusIn(java.time.LocalDateTime start, java.time.LocalDateTime end, java.util.Collection<TicketStatus> statuses);
+
+    void deleteByEventId(Long eventId);
 }

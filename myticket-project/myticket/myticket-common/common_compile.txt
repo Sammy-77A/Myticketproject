@@ -1,0 +1,19 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.myticket:myticket-common >--------------------
+[INFO] Building MyTicket — Common 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ myticket-common ---
+[INFO] skip non existing resourceDirectory C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\resources
+[INFO] skip non existing resourceDirectory C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ myticket-common ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.780 s
+[INFO] Finished at: 2026-03-22T11:17:09+03:00
+[INFO] ------------------------------------------------------------------------

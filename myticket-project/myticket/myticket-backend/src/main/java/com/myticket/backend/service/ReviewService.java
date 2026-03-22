@@ -75,7 +75,7 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
-        auditLogService.log(userId, user.getEmail(), "SUBMIT_REVIEW", "Review", review.getId(),
+        auditLogService.log(userId, user.getEmail(), "REVIEW_SUBMITTED", "Review", review.getId(),
                 "Reviewed event " + eventId + " with " + req.getStarRating() + " stars");
 
         return mapToResponse(review);

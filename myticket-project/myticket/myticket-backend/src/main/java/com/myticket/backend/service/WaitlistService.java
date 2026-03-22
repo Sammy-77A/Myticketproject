@@ -79,6 +79,8 @@ public class WaitlistService {
         emailService.sendWaitlistSlotAvailable(user.getEmail(), user.getFullName(),
                 event.getTitle(), "You are on the waitlist for " + event.getTitle());
 
+        auditLogService.logAction(user.getEmail(), "WAITLIST_JOINED", "Joined waitlist for event " + eventId);
+
         return mapToResponse(saved);
     }
 
@@ -135,7 +137,8 @@ public class WaitlistService {
         if (entry.getClaimExpiresAt().isBefore(LocalDateTime.now())) {
             entry.setStatus(WaitlistStatus.EXPIRED);
             waitlistRepository.save(entry);
-            throw new RuntimeException("Claim token has expired");
+            auditLogService.logAction(entry.getUser().getEmail(), "WAITLIST_EXPIRED", "Waitlist claim expired for event " + entry.getEvent().getId());
+            throw new com.myticket.common.exception.ClaimExpiredException("Claim token has expired");
         }
 
         // Book a free ticket for this user+tier

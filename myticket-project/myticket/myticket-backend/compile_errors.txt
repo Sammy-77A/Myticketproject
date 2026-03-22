@@ -1,0 +1,152 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.myticket:myticket-backend >--------------------
+[INFO] Building MyTicket — Backend 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ myticket-backend ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ myticket-backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 90 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[8,41] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[9,41] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[10,41] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[35,27] cannot find symbol
+  symbol:   class SystemOverviewResponse
+  location: class com.myticket.backend.controller.AnalyticsController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[41,27] cannot find symbol
+  symbol:   class EventAnalyticsResponse
+  location: class com.myticket.backend.controller.AnalyticsController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[59,32] cannot find symbol
+  symbol:   class AttendanceReportResponse
+  location: class com.myticket.backend.controller.AnalyticsController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[40,12] cannot find symbol
+  symbol:   class SystemOverviewResponse
+  location: class com.myticket.backend.service.AnalyticsService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[71,12] cannot find symbol
+  symbol:   class EventAnalyticsResponse
+  location: class com.myticket.backend.service.AnalyticsService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[150,17] cannot find symbol
+  symbol:   class AttendanceReportResponse
+  location: class com.myticket.backend.service.AnalyticsService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[5,1] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AuthController.java:[69,172] cannot find symbol
+  symbol:   class UserDetails
+  location: class com.myticket.backend.controller.AuthController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/SeatBroadcastService.java:[3,31] cannot find symbol
+  symbol:   class AttendanceUpdateMessage
+  location: package com.myticket.common.dto
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/SeatBroadcastService.java:[4,31] cannot find symbol
+  symbol:   class SeatUpdateMessage
+  location: package com.myticket.common.dto
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[18,78] cannot find symbol
+  symbol:   class AgeRestrictionException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[23,77] cannot find symbol
+  symbol:   class TicketSoldOutException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[28,82] cannot find symbol
+  symbol:   class ReturnWindowClosedException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[33,76] cannot find symbol
+  symbol:   class ClaimExpiredException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[3,1] package com.myticket.common.exception does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[17,23] cannot find symbol
+  symbol:   class AgeRestrictionException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[22,23] cannot find symbol
+  symbol:   class TicketSoldOutException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[27,23] cannot find symbol
+  symbol:   class ReturnWindowClosedException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[32,23] cannot find symbol
+  symbol:   class ClaimExpiredException
+  location: class com.myticket.backend.exception.GlobalExceptionHandler
+[INFO] 22 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.383 s
+[INFO] Finished at: 2026-03-22T11:04:43+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project myticket-backend: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[8,41] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[9,41] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[10,41] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[35,27] cannot find symbol
+[ERROR]   symbol:   class SystemOverviewResponse
+[ERROR]   location: class com.myticket.backend.controller.AnalyticsController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[41,27] cannot find symbol
+[ERROR]   symbol:   class EventAnalyticsResponse
+[ERROR]   location: class com.myticket.backend.controller.AnalyticsController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AnalyticsController.java:[59,32] cannot find symbol
+[ERROR]   symbol:   class AttendanceReportResponse
+[ERROR]   location: class com.myticket.backend.controller.AnalyticsController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[40,12] cannot find symbol
+[ERROR]   symbol:   class SystemOverviewResponse
+[ERROR]   location: class com.myticket.backend.service.AnalyticsService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[71,12] cannot find symbol
+[ERROR]   symbol:   class EventAnalyticsResponse
+[ERROR]   location: class com.myticket.backend.service.AnalyticsService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[150,17] cannot find symbol
+[ERROR]   symbol:   class AttendanceReportResponse
+[ERROR]   location: class com.myticket.backend.service.AnalyticsService
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/AnalyticsService.java:[5,1] package com.myticket.common.dto.analytics does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/controller/AuthController.java:[69,172] cannot find symbol
+[ERROR]   symbol:   class UserDetails
+[ERROR]   location: class com.myticket.backend.controller.AuthController
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/SeatBroadcastService.java:[3,31] cannot find symbol
+[ERROR]   symbol:   class AttendanceUpdateMessage
+[ERROR]   location: package com.myticket.common.dto
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/service/SeatBroadcastService.java:[4,31] cannot find symbol
+[ERROR]   symbol:   class SeatUpdateMessage
+[ERROR]   location: package com.myticket.common.dto
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[18,78] cannot find symbol
+[ERROR]   symbol:   class AgeRestrictionException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[23,77] cannot find symbol
+[ERROR]   symbol:   class TicketSoldOutException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[28,82] cannot find symbol
+[ERROR]   symbol:   class ReturnWindowClosedException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[33,76] cannot find symbol
+[ERROR]   symbol:   class ClaimExpiredException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[3,1] package com.myticket.common.exception does not exist
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[17,23] cannot find symbol
+[ERROR]   symbol:   class AgeRestrictionException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[22,23] cannot find symbol
+[ERROR]   symbol:   class TicketSoldOutException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[27,23] cannot find symbol
+[ERROR]   symbol:   class ReturnWindowClosedException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/exception/GlobalExceptionHandler.java:[32,23] cannot find symbol
+[ERROR]   symbol:   class ClaimExpiredException
+[ERROR]   location: class com.myticket.backend.exception.GlobalExceptionHandler
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

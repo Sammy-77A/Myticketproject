@@ -22,4 +22,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Double findAverageRatingByEventId(@Param("eventId") Long eventId);
 
     long countByEventId(Long eventId);
+
+    void deleteByEventId(Long eventId);
 }

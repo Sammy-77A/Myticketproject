@@ -18,4 +18,6 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
     long countByEventId(Long eventId);
 
     long countByEventIdAndType(Long eventId, ReactionType type);
+
+    void deleteByEventId(Long eventId);
 }

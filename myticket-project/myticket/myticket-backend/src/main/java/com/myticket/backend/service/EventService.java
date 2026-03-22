@@ -97,7 +97,7 @@ public class EventService {
             }
         }
 
-        auditLogService.log(organizerId, "ORGANIZER", "CREATE_EVENT", "Event", savedEvent.getId(), "Event created");
+        auditLogService.log(organizerId, "ORGANIZER", "EVENT_CREATED", "Event", savedEvent.getId(), "Event created");
 
         List<Subscriber> subs = subscriberRepository.findAll();
         for (Subscriber sub : subs) {
@@ -159,7 +159,7 @@ public class EventService {
             }
         }
 
-        auditLogService.log(actorId, actor.getRole().name(), "UPDATE_EVENT", "Event", updatedEvent.getId(), "Event updated");
+        auditLogService.log(actorId, actor.getRole().name(), "EVENT_UPDATED", "Event", updatedEvent.getId(), "Event updated");
 
         return updatedEvent;
     }
@@ -186,7 +186,7 @@ public class EventService {
                     "Event \"" + event.getTitle() + "\" has been cancelled.", event.getId());
         }
 
-        auditLogService.log(actorId, actor.getRole().name(), "CANCEL_EVENT", "Event", event.getId(), "Event cancelled");
+        auditLogService.log(actorId, actor.getRole().name(), "EVENT_CANCELLED", "Event", event.getId(), "Event cancelled");
     }
 
     public EventResponse getEvent(Long id) {

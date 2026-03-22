@@ -34,4 +34,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     java.util.Optional<com.myticket.backend.model.Event> findByIdWithPessimisticWrite(@org.springframework.data.repository.query.Param("id") Long id);
 
     List<Event> findByEventDateBetweenAndStatus(LocalDateTime start, LocalDateTime end, EventStatus status);
+
+    long countByStatus(EventStatus status);
 }

@@ -32,6 +32,20 @@ public class OrganizerController {
         this.eventService = eventService;
     }
 
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<OrganizerProfileResponse>> getAllOrganizers() {
+        List<User> organizers = userRepository.findByRole(com.myticket.common.enums.Role.ORGANIZER);
+        List<OrganizerProfileResponse> response = organizers.stream().map(o -> {
+            long followerCount = userRepository.countFollowers(o.getId());
+            return OrganizerProfileResponse.builder()
+                    .name(o.getFullName())
+                    .bio(o.getBio())
+                    .followerCount(followerCount)
+                    .build();
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<OrganizerProfileResponse> getOrganizer(@PathVariable Long id) {
         User organizer = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Organizer not found"));

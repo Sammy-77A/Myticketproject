@@ -1,0 +1,549 @@
+﻿
+[ERROR] COMPILATION 
+ERROR : 
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[8,41] package com.myt
+icket.common.dto.analyt
+ics does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[9,41] package com.myt
+icket.common.dto.analyt
+ics does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[10,41] package com.my
+ticket.common.dto.analy
+tics does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[35,27] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[41,27] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[59,32] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[40,1
+2] cannot find symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[71,1
+2] cannot find symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[150,
+17] cannot find symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[5,1]
+ package com.myticket.c
+ommon.dto.analytics 
+does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+uthController.java:[69,
+172] cannot find symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Seat
+BroadcastService.java:[
+3,31] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Seat
+BroadcastService.java:[
+4,31] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[18,78] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[23,77] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[28,82] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[33,76] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[3,1] package com.my
+ticket.common.exception
+ does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[17,23] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[22,23] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[27,23] cannot find 
+symbol
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[32,23] cannot find 
+symbol
+[ERROR] Failed to 
+execute goal org.apache
+.maven.plugins:maven-co
+mpiler-plugin:3.13.0:co
+mpile 
+(default-compile) on 
+project 
+myticket-backend: 
+Compilation failure: 
+Compilation failure: 
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[8,41] package com.myt
+icket.common.dto.analyt
+ics does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[9,41] package com.myt
+icket.common.dto.analyt
+ics does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[10,41] package com.my
+ticket.common.dto.analy
+tics does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[35,27] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+SystemOverviewResponse
+[ERROR]   location: 
+class com.myticket.back
+end.controller.Analytic
+sController
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[41,27] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+EventAnalyticsResponse
+[ERROR]   location: 
+class com.myticket.back
+end.controller.Analytic
+sController
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+nalyticsController.java
+:[59,32] cannot find 
+symbol
+[ERROR]   symbol:   
+class AttendanceReportR
+esponse
+[ERROR]   location: 
+class com.myticket.back
+end.controller.Analytic
+sController
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[40,1
+2] cannot find symbol
+[ERROR]   symbol:   
+class 
+SystemOverviewResponse
+[ERROR]   location: 
+class com.myticket.back
+end.service.AnalyticsSe
+rvice
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[71,1
+2] cannot find symbol
+[ERROR]   symbol:   
+class 
+EventAnalyticsResponse
+[ERROR]   location: 
+class com.myticket.back
+end.service.AnalyticsSe
+rvice
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[150,
+17] cannot find symbol
+[ERROR]   symbol:   
+class AttendanceReportR
+esponse
+[ERROR]   location: 
+class com.myticket.back
+end.service.AnalyticsSe
+rvice
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Anal
+yticsService.java:[5,1]
+ package com.myticket.c
+ommon.dto.analytics 
+does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/controller/A
+uthController.java:[69,
+172] cannot find symbol
+[ERROR]   symbol:   
+class UserDetails
+[ERROR]   location: 
+class com.myticket.back
+end.controller.AuthCont
+roller
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Seat
+BroadcastService.java:[
+3,31] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+AttendanceUpdateMessage
+[ERROR]   location: 
+package 
+com.myticket.common.dto
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/service/Seat
+BroadcastService.java:[
+4,31] cannot find 
+symbol
+[ERROR]   symbol:   
+class SeatUpdateMessage
+[ERROR]   location: 
+package 
+com.myticket.common.dto
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[18,78] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+AgeRestrictionException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[23,77] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+TicketSoldOutException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[28,82] cannot find 
+symbol
+[ERROR]   symbol:   
+class ReturnWindowClose
+dException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[33,76] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+ClaimExpiredException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[3,1] package com.my
+ticket.common.exception
+ does not exist
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[17,23] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+AgeRestrictionException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[22,23] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+TicketSoldOutException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[27,23] cannot find 
+symbol
+[ERROR]   symbol:   
+class ReturnWindowClose
+dException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] /C:/Users/sam/D
+ocuments/Myticketprojec
+t/myticket-project/myti
+cket/myticket-backend/s
+rc/main/java/com/mytick
+et/backend/exception/Gl
+obalExceptionHandler.ja
+va:[32,23] cannot find 
+symbol
+[ERROR]   symbol:   
+class 
+ClaimExpiredException
+[ERROR]   location: 
+class com.myticket.back
+end.exception.GlobalExc
+eptionHandler
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the 
+full stack trace of 
+the errors, re-run 
+Maven with the -e 
+switch.
+[ERROR] Re-run Maven 
+using the -X switch to 
+enable full debug 
+logging.
+[ERROR] 
+[ERROR] For more 
+information about the 
+errors and possible 
+solutions, please read 
+the following articles:
+[ERROR] [Help 1] http:/
+/cwiki.apache.org/confl
+uence/display/MAVEN/Moj
+oFailureException
+
+

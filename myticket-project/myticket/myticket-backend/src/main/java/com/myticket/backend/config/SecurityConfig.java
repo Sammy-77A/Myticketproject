@@ -19,8 +19,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
@@ -43,7 +46,8 @@ public class SecurityConfig {
                     "/api/recommendations/trending",
                     "/api/feed", 
                     "/api/health", 
-                    "/api/images/**").permitAll()
+                    "/api/images/**",
+                    "/api/organizers/**").permitAll()
                 .requestMatchers(
                     "/api/auth/**", 
                     "/api/subscribe",

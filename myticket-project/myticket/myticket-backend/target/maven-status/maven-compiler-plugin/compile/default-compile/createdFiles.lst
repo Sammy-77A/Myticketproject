@@ -56,6 +56,7 @@ com\myticket\backend\model\User$UserBuilder.class
 com\myticket\backend\service\RecommendationService.class
 com\myticket\backend\repository\AuditLogRepository.class
 com\myticket\backend\controller\AuthController.class
+com\myticket\backend\exception\GlobalExceptionHandler.class
 com\myticket\backend\controller\SubscriberController.class
 com\myticket\backend\model\Reaction$ReactionBuilder.class
 com\myticket\backend\service\HCaptchaService.class
@@ -74,12 +75,15 @@ com\myticket\backend\service\SmtpEmailService.class
 com\myticket\backend\model\Performer.class
 com\myticket\backend\repository\ReviewRepository.class
 com\myticket\backend\service\PaymentService.class
+com\myticket\backend\service\AnalyticsService.class
+com\myticket\backend\controller\AdminController.class
 com\myticket\backend\MyTicketApplication.class
 com\myticket\backend\model\UserInterest$UserInterestBuilder.class
 com\myticket\backend\model\Event.class
 com\myticket\backend\service\SeatBroadcastService.class
 com\myticket\backend\service\TicketService.class
 com\myticket\backend\model\Waitlist$WaitlistBuilder.class
+com\myticket\backend\service\AdminService.class
 com\myticket\backend\controller\ReactionController.class
 com\myticket\backend\model\Performer$PerformerBuilder.class
 com\myticket\backend\repository\TicketTierRepository.class
@@ -96,5 +100,6 @@ com\myticket\backend\model\Review.class
 com\myticket\backend\repository\PerformerRepository.class
 com\myticket\backend\model\Event$EventBuilder.class
 com\myticket\backend\controller\OrganizerController.class
+com\myticket\backend\controller\AnalyticsController.class
 com\myticket\backend\model\TicketTier.class
 com\myticket\backend\security\JwtUtil.class

@@ -59,7 +59,7 @@ public class CommentService {
 
         commentRepository.save(comment);
 
-        auditLogService.log(userId, user.getEmail(), "ADD_COMMENT", "Comment", comment.getId(),
+        auditLogService.log(userId, user.getEmail(), "COMMENT_ADDED", "Comment", comment.getId(),
                 "Comment on event " + eventId);
 
         // Boost user interest score for this category
@@ -94,6 +94,8 @@ public class CommentService {
 
         comment.setDeleted(true);
         commentRepository.save(comment);
+
+        auditLogService.log(actorId, actor.getEmail(), "COMMENT_DELETED", "Comment", comment.getId(), "Comment deleted");
     }
 
     private CommentResponse mapToResponse(Comment c) {
