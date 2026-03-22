@@ -150,7 +150,7 @@
             // Check health for online/offline mode
             try {
                 const health = await api.get('/api/health');
-                if (health && health.mode === 'OFFLINE') {
+                if (health && health.mode && health.mode.toLowerCase() === 'offline') {
                     const gBtn = document.getElementById('googleBtn');
                     gBtn.disabled = true;
                     // Prevent navigation

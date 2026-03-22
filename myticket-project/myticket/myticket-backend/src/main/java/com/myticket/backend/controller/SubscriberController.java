@@ -35,8 +35,4 @@ public class SubscriberController {
         return ResponseEntity.ok(Map.of("message", "Unsubscribed successfully"));
     }
 
-    @GetMapping("/api/admin/subscribers")
-    public ResponseEntity<List<Subscriber>> getAllSubscribers() {
-        return ResponseEntity.ok(subscriberService.getAllSubscribers());
-    }
 }

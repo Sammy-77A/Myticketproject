@@ -41,8 +41,12 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/", "/*.html", "/*.js", "/*.css",
+                    "/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()
                 .requestMatchers(HttpMethod.GET, 
                     "/api/events/**", 
+                    "/api/categories/**",
                     "/api/recommendations/trending",
                     "/api/feed", 
                     "/api/health", 

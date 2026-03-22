@@ -8,6 +8,7 @@ import com.myticket.common.enums.NotificationType;
 import com.myticket.common.enums.WaitlistStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,7 +43,7 @@ public class WaitlistService {
     }
 
     @org.springframework.beans.factory.annotation.Autowired
-    public void setTicketService(TicketService ticketService) {
+    public void setTicketService(@Lazy TicketService ticketService) {
         this.ticketService = ticketService;
     }
 
