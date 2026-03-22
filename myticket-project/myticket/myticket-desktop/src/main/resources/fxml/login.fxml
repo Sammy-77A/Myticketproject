@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.myticket.desktop.controller.LoginController"
+            styleClass="root">
+
+    <!-- ── Center: Login Card ── -->
+    <center>
+        <VBox alignment="CENTER" spacing="0">
+            <VBox styleClass="login-card" maxWidth="400" spacing="16"
+                  alignment="CENTER">
+
+                <!-- Logo / Title -->
+                <Label text="🎫 MyTicket" styleClass="login-title"/>
+                <Label text="Campus Event Ticketing System"
+                       styleClass="login-subtitle"/>
+
+                <Region prefHeight="8"/>
+
+                <!-- Email -->
+                <TextField fx:id="emailField" promptText="Email address"
+                           styleClass="text-field" maxWidth="320"/>
+
+                <!-- Password -->
+                <PasswordField fx:id="passwordField" promptText="Password"
+                               styleClass="password-field" maxWidth="320"
+                               onAction="#onLogin"/>
+
+                <!-- Error -->
+                <Label fx:id="errorLabel" styleClass="error-label"
+                       visible="false" managed="false" wrapText="true"
+                       maxWidth="320"/>
+
+                <!-- Login button -->
+                <Button text="Log In" styleClass="btn-primary"
+                        maxWidth="320" onAction="#onLogin"
+                        fx:id="loginButton"/>
+
+                <!-- Divider -->
+                <Separator maxWidth="280"/>
+
+                <!-- Google button -->
+                <Button fx:id="googleButton" text="Sign in with Google"
+                        styleClass="btn-google" maxWidth="320"
+                        onAction="#onGoogleLogin"/>
+
+            </VBox>
+        </VBox>
+    </center>
+
+    <!-- ── Bottom: Status Bar ── -->
+    <bottom>
+        <HBox styleClass="status-bar" alignment="CENTER_LEFT" spacing="8">
+            <Circle fx:id="statusDot" radius="5" styleClass="status-dot-error"/>
+            <Text fx:id="statusText" text="Checking server…"
+                  styleClass="status-text"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

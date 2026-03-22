@@ -1,0 +1,128 @@
+/* ===== MyTicket Desktop – Global Stylesheet ===== */
+
+/* ---------- Root & Typography ---------- */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f0f2f5;
+}
+
+/* ---------- Login Card ---------- */
+.login-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 20, 0, 0, 4);
+    -fx-padding: 40 36 36 36;
+}
+
+.login-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a2e;
+}
+
+.login-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6c757d;
+}
+
+/* ---------- Text Fields ---------- */
+.text-field, .password-field {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-font-size: 14px;
+    -fx-pref-height: 42;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #6c63ff;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(108,99,255,0.18), 8, 0, 0, 0);
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 24;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-pref-height: 44;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #5a52d5;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #4a44b0;
+}
+
+.btn-google {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #5f6368;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-border-color: #dadce0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-pref-height: 42;
+}
+
+.btn-google:hover {
+    -fx-background-color: #f1f3f4;
+}
+
+.btn-google-disabled {
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #adb5bd;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-pref-height: 42;
+    -fx-cursor: default;
+}
+
+/* ---------- Status Bar ---------- */
+.status-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 6 16;
+}
+
+.status-dot-online {
+    -fx-fill: #28a745;
+}
+
+.status-dot-offline {
+    -fx-fill: #fd7e14;
+}
+
+.status-dot-error {
+    -fx-fill: #dc3545;
+}
+
+.status-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6c757d;
+}
+
+/* ---------- Error Label ---------- */
+.error-label {
+    -fx-text-fill: #dc3545;
+    -fx-font-size: 13px;
+}
+
+/* ---------- Divider ---------- */
+.separator-line {
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1 0 0 0;
+}
