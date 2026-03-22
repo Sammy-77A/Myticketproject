@@ -112,3 +112,11 @@ class ApiClient {
 
 // Global instance
 const api = new ApiClient();
+
+// Initialize appMode globally
+window.appMode = 'online'; // default
+api.get('/api/health').then(health => {
+    if (health && health.mode) {
+        window.appMode = health.mode;
+    }
+}).catch(e => console.warn('Health check failed, assuming online mode'));

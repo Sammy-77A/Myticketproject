@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Booking - MyTicket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .flow-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: var(--mid-gray);
+            z-index: 1;
+        }
+        .step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px solid var(--mid-gray);
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+        .step.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        .step.completed {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+        .summary-box {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--mid-gray);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1.25rem;
+            border-top: 1px solid #ccc;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .checkmark-circle {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--success);
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 1.5rem;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">🎫 MyTicket</a>
+    </nav>
+
+    <div class="container">
+        <div class="flow-container">
+            <div class="step-indicator">
+                <div class="step active" id="dotStep1">1</div>
+                <div class="step" id="dotStep2">2</div>
+                <div class="step" id="dotStep3">3</div>
+            </div>
+
+            <!-- STEP 1: REVIEW -->
+            <div id="step1">
+                <h2 class="mb-3 text-center">Review Booking</h2>
+                
+                <div class="summary-box" id="reviewSummary">
+                    <p>Loading...</p>
+                </div>
+
+                <div id="ageGateContainer" class="form-group d-none">
+                    <label class="form-label text-danger">⚠️ Age Restricted Event. Confirm Date of Birth:</label>
+                    <input type="date" id="dobInput" class="form-control">
+                    <p id="ageError" class="text-danger mt-1 d-none" style="font-size:0.85rem;">You do not meet the age requirement.</p>
+                </div>
+
+                <div id="groupMembersContainer" class="mb-3"></div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-secondary" onclick="window.history.back()">Cancel</button>
+                    <button class="btn btn-primary" onclick="goToPayment()">Continue to Payment</button>
+                </div>
+            </div>
+
+            <!-- STEP 2: PAYMENT -->
+            <div id="step2" class="d-none">
+                <h2 class="mb-3 text-center">Complete Payment</h2>
+                
+                <div id="onlinePaymentPanel" class="text-center p-4">
+                    <p class="mb-4">You are about to pay <b><span id="payAmountOnline"></span></b> via M-Pesa STK Push.</p>
+                    <button class="btn btn-success" style="font-size:1.25rem; padding:1rem 2rem;" id="btnPayMpesa" onclick="dispatchBooking()">Pay with M-Pesa</button>
+                    <p id="payError" class="text-danger mt-3 d-none"></p>
+                </div>
+
+                <div id="offlineMockPanel" class="d-none" style="background:#28a745; color:white; padding:30px; border-radius:8px; text-align:center;">
+                    <h3 class="mb-2">Mock M-Pesa Checkout</h3>
+                    <p class="mb-4">Pay <b><span id="payAmountOffline"></span></b> to MyTicket.</p>
+                    <button class="btn btn-dark" style="font-size:1.25rem; padding:1rem 2rem;" id="btnMockPay" onclick="dispatchBooking()">Simulate Payment</button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-secondary" onclick="goToReview()">Back</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: CONFIRMATION -->
+            <div id="step3" class="d-none text-center">
+                <div class="checkmark-circle">✓</div>
+                <h2 class="mb-2">Booking Confirmed!</h2>
+                <p class="text-secondary mb-4">Your tickets are ready.</p>
+
+                <div id="qrContainer" class="mb-4 d-none">
+                    <img id="qrImage" src="" alt="Ticket QR" style="width:200px; height:200px; border:1px solid #ddd; padding:10px; border-radius:8px; background:white;">
+                </div>
+                
+                <h4 class="mb-4" id="ticketCodeDisp"></h4>
+
+                <div class="d-flex" style="flex-direction:column; gap:10px; max-width:300px; margin:0 auto;">
+                    <a href="#" id="downloadQrBtn" download="myticket_qr.png" class="btn btn-outline-primary">⬇️ Download QR Code</a>
+                    <a href="#" id="shareWaBtn" target="_blank" class="btn btn-success">WhatsApp Share</a>
+                    <button class="btn btn-outline-secondary" onclick="downloadICS()">📅 Add to Calendar</button>
+                    <a href="account.html" class="btn btn-primary mt-3">View My Tickets</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        let bookingData = null;
+        let isOffline = false;
+        let finalTicketCode = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!api.isAuthenticated()) {
+                window.location.href = `/login.html?redirect=${encodeURIComponent(window.location.pathname)}`;
+                return;
+            }
+
+            // Check if arriving from stk-waiting with success
+            if (window.location.hash === '#confirmation') {
+                finalTicketCode = new URLSearchParams(window.location.search).get('code') || localStorage.getItem('lastTicketCode');
+                showConfirmation();
+                return;
+            }
+
+            // Load booking data
+            const bDataStr = localStorage.getItem('bookingData');
+            if(!bDataStr) {
+                document.querySelector('.flow-container').innerHTML = "<h3 class='text-center'>No booking data found. Please return to the event page.</h3>";
+                return;
+            }
+            bookingData = JSON.parse(bDataStr);
+            
+            checkOfflineStatus();
+            renderReview();
+        });
+
+        async function checkOfflineStatus() {
+            try {
+                const health = await api.get('/api/health');
+                isOffline = health?.mode === 'OFFLINE';
+            } catch (e) { console.warn("Health check failed, assuming online"); }
+        }
+
+        function renderReview() {
+            const ev = bookingData.eventTitle;
+            const price = bookingData.price;
+            const qty = bookingData.quantity;
+            const tier = bookingData.tierName;
+            const total = price * qty;
+            
+            document.getElementById('reviewSummary').innerHTML = `
+                <div class="summary-row"><span>Event:</span> <b>${ev}</b></div>
+                <div class="summary-row"><span>Tier:</span> <span>${tier}</span></div>
+                <div class="summary-row"><span>Price:</span> <span>KES ${price} x ${qty}</span></div>
+                <div class="summary-row total"><span>Total:</span> <span>KES ${total}</span></div>
+            `;
+
+            if(bookingData.minAge > 0) {
+                document.getElementById('ageGateContainer').classList.remove('d-none');
+            }
+
+            const gmc = document.getElementById('groupMembersContainer');
+            gmc.innerHTML = '';
+            if(qty > 1) {
+                gmc.innerHTML = `<h5 class="mb-2">Group Members Info</h5>`;
+                for(let i=1; i<qty; i++) {
+                    gmc.innerHTML += `<input type="text" id="gm-${i}" class="form-control mb-2" placeholder="Guest ${i} Full Name" required>`;
+                }
+            }
+        }
+
+        function goToPayment() {
+            if (bookingData.minAge > 0) {
+                const dob = document.getElementById('dobInput').value;
+                if(!dob) { alert('Enter DOB'); return; }
+                const age = calculateAge(dob);
+                if (age < bookingData.minAge) {
+                    document.getElementById('ageError').classList.remove('d-none');
+                    return;
+                }
+            }
+            document.getElementById('ageError')?.classList.add('d-none');
+
+            bookingData.groupMembers = [];
+            for(let i=1; i<bookingData.quantity; i++) {
+                const v = document.getElementById(`gm-${i}`)?.value;
+                if(!v){ alert('Fill group member names'); return;}
+                bookingData.groupMembers.push(v);
+            }
+
+            // UI step change
+            document.getElementById('step1').classList.add('d-none');
+            document.getElementById('step2').classList.remove('d-none');
+            document.getElementById('dotStep1').classList.remove('active');
+            document.getElementById('dotStep1').classList.add('completed');
+            document.getElementById('dotStep2').classList.add('active');
+
+            const total = bookingData.price * bookingData.quantity;
+            const formattedTotal = `KES ${total}`;
+
+            if(bookingData.price === 0) {
+                // Free event bypass
+                document.getElementById('onlinePaymentPanel').classList.remove('d-none');
+                document.getElementById('payAmountOnline').textContent = "FREE";
+                document.getElementById('btnPayMpesa').textContent = "Confirm Free Booking";
+            } else if (isOffline) {
+                document.getElementById('onlinePaymentPanel').classList.add('d-none');
+                document.getElementById('offlineMockPanel').classList.remove('d-none');
+                document.getElementById('payAmountOffline').textContent = formattedTotal;
+            } else {
+                document.getElementById('onlinePaymentPanel').classList.remove('d-none');
+                document.getElementById('payAmountOnline').textContent = formattedTotal;
+            }
+        }
+
+        function calculateAge(dobStr) {
+            const dob = new Date(dobStr);
+            const diff = Date.now() - dob.getTime();
+            return new Date(diff).getUTCFullYear() - 1970;
+        }
+
+        function goToReview() {
+            document.getElementById('step2').classList.add('d-none');
+            document.getElementById('step1').classList.remove('d-none');
+            document.getElementById('dotStep2').classList.remove('active');
+            document.getElementById('dotStep1').classList.remove('completed');
+            document.getElementById('dotStep1').classList.add('active');
+        }
+
+        async function dispatchBooking() {
+            const payload = {
+                eventId: bookingData.eventId,
+                tierId: bookingData.tierId,
+                quantity: bookingData.quantity,
+                groupMembers: bookingData.groupMembers,
+                buyerPhoneNumber: "254700000000" // Should ideally be fetched from user profile, hardcoded for ease
+            };
+
+            const btn = document.getElementById('btnPayMpesa');
+            const errBox = document.getElementById('payError');
+            btn.disabled = true; errBox.classList.add('d-none');
+
+            try {
+                const response = await api.post('/api/tickets/book', payload);
+                if (response.redirectUrl) {
+                    // M-Pesa triggered -> redirect to STK waiting
+                    window.location.href = response.redirectUrl;
+                } else {
+                    // Free ticket OR mock auto-confirmed by backend bypassing redirectUrl
+                    // Save ticket code
+                    finalTicketCode = response.tickets[0].ticketCode;
+                    localStorage.setItem('lastTicketCode', finalTicketCode);
+                    showConfirmation();
+                }
+            } catch (err) {
+                errBox.textContent = "Booking failed: " + err.message;
+                errBox.classList.remove('d-none');
+                btn.disabled = false;
+            }
+        }
+
+        function showConfirmation() {
+            document.getElementById('step1').classList.add('d-none');
+            document.getElementById('step2').classList.add('d-none');
+            document.getElementById('step3').classList.remove('d-none');
+            
+            document.getElementById('dotStep1').className = "step completed";
+            document.getElementById('dotStep2').className = "step completed";
+            document.getElementById('dotStep3').className = "step completed"; // or active
+
+            if(finalTicketCode) {
+                document.getElementById('ticketCodeDisp').textContent = `Code: ${finalTicketCode}`;
+                const qrUrl = api.baseUrl + `/api/tickets/${finalTicketCode}/qr`;
+                document.getElementById('qrImage').src = qrUrl;
+                document.getElementById('downloadQrBtn').href = qrUrl;
+                document.getElementById('qrContainer').classList.remove('d-none');
+            }
+
+            const evTitle = bookingData ? bookingData.eventTitle : 'this event';
+            document.getElementById('shareWaBtn').href = `https://wa.me/?text=I'm%20going%20to%20${encodeURIComponent(evTitle)}!`;
+            
+            localStorage.removeItem('bookingData'); // clean up
+        }
+
+        function downloadICS() {
+            const ev = bookingData || {eventTitle:'MyTicket Event', startTime: Date.now()};
+            const dtStart = new Date(ev.startTime).toISOString().replace(/[-:]/g, '').split('.')[0]+'Z';
+            const icsData = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//MyTicket//EN
+BEGIN:VEVENT
+UID:${Date.now()}@myticket.com
+DTSTAMP:${dtStart}
+DTSTART:${dtStart}
+SUMMARY:${ev.eventTitle}
+LOCATION:${ev.venue || 'TBD'}
+END:VEVENT
+END:VCALENDAR`;
+            
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'event.ics';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

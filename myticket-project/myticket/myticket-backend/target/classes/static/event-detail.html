@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - MyTicket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .banner {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background-color: var(--dark-gray);
+        }
+        .event-header {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin-top: -50px;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .live-counter {
+            background: #ffeeba;
+            color: #856404;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,193,7,0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255,193,7,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,193,7,0); }
+        }
+        .tier-card {
+            border: 1px solid var(--mid-gray);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .tier-closed-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--danger);
+            z-index: 10;
+        }
+        .capacity-bar {
+            height: 8px;
+            background: var(--mid-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .capacity-fill {
+            height: 100%;
+            background: var(--primary);
+        }
+        .perk-badge {
+            background: #e9ecef;
+            color: #495057;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            display: inline-block;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        .gallery-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover { transform: scale(1.05); }
+        .lightbox {
+            position: fixed; top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.9);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 3000; opacity: 0; visibility: hidden; transition: 0.3s;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90%; max-height: 90%; }
+        
+        .comment-thread { margin-bottom: 1.5rem; }
+        .comment { background: white; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--mid-gray); margin-bottom: 0.5rem; }
+        .comment-reply { margin-left: 2rem; border-left: 2px solid var(--primary); }
+        .performer-card { text-align: center; padding: 1rem; background: white; border-radius: var(--radius-sm); border: 1px solid var(--mid-gray); }
+        .performer-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; }
+        
+        .reaction-btn { background: white; border: 1px solid var(--mid-gray); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.2s; }
+        .reaction-btn.active { border-color: var(--primary); background: #e7f1ff; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">🎫 MyTicket</a>
+        <div class="nav-actions" id="navActions"></div>
+    </nav>
+
+    <!-- Banner -->
+    <img id="eventBanner" class="banner" src="" alt="Event Banner">
+
+    <div class="container">
+        <!-- Event Header -->
+        <div class="event-header">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                    <div style="margin-bottom: 10px;" id="badgeContainer"></div>
+                    <h1 id="eventTitle">Loading...</h1>
+                    <p class="text-secondary mt-2">Organized by <a href="#" id="organizerLink">Organizer</a></p>
+                </div>
+                <div class="live-counter" id="liveCounter">
+                    <span>🟢</span> <span id="seatCountText">Connecting...</span>
+                </div>
+            </div>
+            
+            <div style="display:flex; gap: 2rem; margin-top: 1.5rem; color: var(--secondary);">
+                <div>📅 <span id="eventDate"></span></div>
+                <div>📍 <span id="eventVenue"></span></div>
+            </div>
+
+            <!-- Social & Reactions row -->
+            <div style="margin-top: 1.5rem; display:flex; justify-content:space-between; align-items:center; border-top: 1px solid var(--mid-gray); padding-top: 1rem;">
+                <div style="display:flex; gap: 1rem;">
+                    <button class="reaction-btn" id="btnInterested" onclick="toggleReaction('INTERESTED')">👍 Interested (<span id="countInterested">0</span>)</button>
+                    <button class="reaction-btn" id="btnGoing" onclick="toggleReaction('GOING')">✅ Going (<span id="countGoing">0</span>)</button>
+                </div>
+                <div style="display:flex; gap: 0.5rem;">
+                    <a href="#" class="btn btn-sm btn-outline-primary" id="shareWa">WhatsApp</a>
+                    <a href="#" class="btn btn-sm btn-outline-primary" id="shareTw">X</a>
+                    <button class="btn btn-sm btn-secondary" onclick="copyLink()">Copy Link</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+            
+            <!-- LEFT COLUMN -->
+            <div>
+                <!-- Description -->
+                <section class="mb-4">
+                    <h3>About this event</h3>
+                    <p id="eventDescription" style="white-space: pre-line; margin-top:1rem;"></p>
+                </section>
+
+                <!-- Performers -->
+                <section class="mb-4 d-none" id="performersSection">
+                    <h3>Lineup</h3>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top:1rem;" id="performersGrid"></div>
+                </section>
+
+                <!-- Gallery -->
+                <section class="mb-4 d-none" id="gallerySection">
+                    <h3>Gallery</h3>
+                    <div class="gallery-grid mt-3" id="galleryGrid"></div>
+                </section>
+
+                <!-- Reviews -->
+                <section class="mb-4">
+                    <h3>Reviews & Ratings <span id="reviewSummary" style="font-size:1rem; color:var(--secondary);"></span></h3>
+                    <div id="reviewFormContainer" class="d-none mt-3 p-3" style="background:white; border:1px solid var(--mid-gray); border-radius:8px;">
+                        <h5>Write a Review</h5>
+                        <form id="reviewForm">
+                            <select id="reviewRating" class="form-control mb-2" required>
+                                <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                                <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                                <option value="3">⭐⭐⭐ (3/5)</option>
+                                <option value="2">⭐⭐ (2/5)</option>
+                                <option value="1">⭐ (1/5)</option>
+                            </select>
+                            <textarea id="reviewComment" class="form-control mb-2" rows="2" placeholder="Tell us your experience..." required></textarea>
+                            <button type="submit" class="btn btn-primary btn-sm">Submit Review</button>
+                        </form>
+                    </div>
+                    <div id="reviewsList" class="mt-3"></div>
+                </section>
+
+                <!-- Comments -->
+                <section class="mb-4">
+                    <h3>Comments</h3>
+                    <div id="commentFormContainer" class="mt-3 mb-4">
+                        <textarea id="newCommentBody" class="form-control mb-2" rows="2" placeholder="Ask a question or share a thought..."></textarea>
+                        <button class="btn btn-primary" onclick="postComment(null)">Post Comment</button>
+                    </div>
+                    <div id="commentsList"></div>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN: Tickets -->
+            <div>
+                <section id="tiersContainer" style="position:sticky; top: 80px;">
+                    <h3>Tickets</h3>
+                    <div id="tiersList" class="mt-3"></div>
+                </section>
+            </div>
+
+        </div>
+
+        <!-- Recommended Events -->
+        <section class="section mt-4 d-none" id="otherEventsSection">
+            <h2 class="section-title">Other Events You May Like</h2>
+            <div class="horizontal-scroll" id="otherEventsGrid"></div>
+        </section>
+
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 class="modal-title">Complete Booking</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="bookingSummary" style="background:#f8f9fa; padding:15px; border-radius:8px; margin-bottom:15px;"></div>
+                
+                <!-- Age Date of Birth check -->
+                <div id="ageGateContainer" class="form-group d-none">
+                    <label class="form-label text-danger">⚠️ This event is Age Restricted. Please confirm your Date of Birth:</label>
+                    <input type="date" id="dobInput" class="form-control" max="">
+                    <p id="ageError" class="text-danger mt-1 d-none" style="font-size:0.85rem;">You do not meet the age requirement.</p>
+                </div>
+
+                <!-- Group members -->
+                <div id="groupMembersContainer" class="mb-3"></div>
+                
+                <!-- Payment Mock Frame -->
+                <div id="mockMpesaFrame" class="d-none" style="background:#28a745; color:white; padding:20px; border-radius:8px; text-align:center; margin-bottom:15px;">
+                    <h4>Mock M-Pesa STK Push</h4>
+                    <p>Enter PIN to complete payment of <span id="mockAmount"></span></p>
+                    <input type="password" value="1234" class="form-control mb-2" style="text-align:center; width:100px; margin:0 auto;">
+                    <button class="btn btn-dark" onclick="submitBooking(true)">Confirm Pin</button>
+                </div>
+
+                <div id="bookingResult" class="d-none text-center p-3 mt-3 border rounded"></div>
+            </div>
+            <div class="modal-footer" id="bookingFooter">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" id="btnConfirmBooking" onclick="submitBooking(false)">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightboxImg" src="">
+    </div>
+
+    <!-- Scripts -->
+    <script src="api.js"></script>
+    <!-- WebSockets dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs/bundles/stomp.umd.min.js"></script>
+    <script src="websocket.js"></script>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        let currentEvent = null;
+        let selectedTier = null;
+        let selectedQty = 1;
+        let isOffline = false;
+        let currentUserReaction = null;
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            if (!eventId) {
+                document.body.innerHTML = "<h1 style='text-align:center; margin-top:50px;'>Event Not Found</h1>";
+                return;
+            }
+            initNav();
+            checkOfflineStatus();
+            await loadEventDetails();
+            loadComments();
+            loadReviews();
+            loadOtherEvents();
+
+            if (currentEvent) {
+                wsClient.connectToEvent(eventId, (seatData) => {
+                    const el = document.getElementById('seatCountText');
+                    if (seatData.availableSeats <= 0) {
+                        el.textContent = "Sold Out!";
+                        el.parentElement.style.background = "#f8d7da";
+                        el.parentElement.style.color = "#721c24";
+                    } else {
+                        el.textContent = `${seatData.availableSeats} seats remaining`;
+                    }
+                    if(seatData.tierId) updateTierCapacityUI(seatData.tierId, seatData.tierSold, seatData.tierCapacity);
+                }, null);
+            }
+        });
+
+        function initNav() {
+            const nav = document.getElementById('navActions');
+            if (api.isAuthenticated()) {
+                nav.innerHTML = `<button class="btn btn-outline-primary btn-sm" onclick="api.logout()">Logout</button>`;
+            } else {
+                nav.innerHTML = `<a href="/login.html" class="btn btn-outline-primary">Login</a>`;
+                document.getElementById('commentFormContainer').innerHTML = '<p class="text-secondary"><a href="/login.html">Login</a> to post a comment.</p>';
+            }
+        }
+
+        async function checkOfflineStatus() {
+            try {
+                const health = await api.get('/api/health');
+                isOffline = health?.mode === 'OFFLINE';
+            } catch (e) { console.warn("Health check failed, assuming online"); }
+        }
+
+        async function loadEventDetails() {
+            try {
+                currentEvent = await api.get(`/api/events/${eventId}`);
+                
+                document.title = `${currentEvent.title} - MyTicket`;
+                document.getElementById('eventTitle').textContent = currentEvent.title;
+                document.getElementById('eventDescription').textContent = currentEvent.description;
+                document.getElementById('organizerLink').textContent = currentEvent.organizerName;
+                document.getElementById('organizerLink').href = `organizer-profile.html?id=${currentEvent.organizerId}`;
+                
+                const d = new Date(currentEvent.startTime);
+                document.getElementById('eventDate').textContent = d.toLocaleString('en-US', {weekday:'long', month:'long', day:'numeric', hour:'numeric', minute:'2-digit'});
+                document.getElementById('eventVenue').textContent = currentEvent.venue;
+
+                const bgUrl = currentEvent.bannerImageUrl ? (currentEvent.bannerImageUrl.startsWith('http') ? currentEvent.bannerImageUrl : api.baseUrl + currentEvent.bannerImageUrl) : 'https://via.placeholder.com/1200x400?text=No+Image';
+                document.getElementById('eventBanner').src = bgUrl;
+
+                // Badges
+                let badgesHtml = '';
+                if(currentEvent.category) badgesHtml += `<span class="badge badge-primary">${currentEvent.category.name}</span> `;
+                if(currentEvent.minAge > 0) badgesHtml += `<span class="badge badge-age">18+ Only</span>`;
+                document.getElementById('badgeContainer').innerHTML = badgesHtml;
+
+                // Capacity total approximation
+                const avail = currentEvent.tiers.reduce((acc, t) => acc + (t.capacity - t.sold), 0);
+                document.getElementById('seatCountText').textContent = avail > 0 ? `${avail} seats remaining` : "Sold Out";
+
+                // Share row
+                document.getElementById('shareWa').href = currentEvent.whatsAppShareUrl || '#';
+                document.getElementById('shareTw').href = currentEvent.twitterShareUrl || '#';
+
+                // Tiers
+                renderTiers(currentEvent.tiers);
+
+                // Performers
+                if (currentEvent.performers && currentEvent.performers.length > 0) {
+                    document.getElementById('performersSection').classList.remove('d-none');
+                    const grid = document.getElementById('performersGrid');
+                    currentEvent.performers.forEach(p => {
+                        grid.innerHTML += `
+                            <div class="performer-card">
+                                <img src="${p.imageUrl || 'https://via.placeholder.com/80'}" class="performer-img">
+                                <h5>${p.name}</h5>
+                                <p style="font-size:0.8rem; color:var(--secondary)">${p.role}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Gallery
+                if (currentEvent.galleryUrls && currentEvent.galleryUrls.length > 0) {
+                    document.getElementById('gallerySection').classList.remove('d-none');
+                    const grid = document.getElementById('galleryGrid');
+                    currentEvent.galleryUrls.forEach(url => {
+                        const imgUrl = url.startsWith('http') ? url : api.baseUrl + url;
+                        grid.innerHTML += `<img src="${imgUrl}" class="gallery-img" onclick="openLightbox('${imgUrl}')">`;
+                    });
+                }
+
+                // Reactions setup
+                if (api.isAuthenticated()) {
+                    // Try to fetch user reaction if endpoint supports it, else wait for click
+                    try{
+                        const rx = await api.get(`/api/events/${eventId}/reactions`);
+                        if(rx.userReaction) toggleBtnState(rx.userReaction);
+                    } catch(e){}
+                }
+                updateReactionCounts(currentEvent.reactionCounts);
+
+            } catch (e) {
+                console.error("Failed to load event:", e);
+                document.body.innerHTML = "<h1 style='text-align:center; margin-top:50px;'>Error loading event details.</h1>";
+            }
+        }
+
+        function renderTiers(tiers) {
+            const container = document.getElementById('tiersList');
+            container.innerHTML = '';
+            
+            tiers.forEach(t => {
+                const isFree = t.price === 0;
+                const priceStr = isFree ? 'FREE' : `KES ${t.price}`;
+                const pct = (t.sold / t.capacity) * 100;
+                
+                // Deal Score UI
+                let dealBadge = '';
+                if(t.dealScore) {
+                    const ds = t.dealScore;
+                    if(ds.match(/BEST VALUE/i)) dealBadge = `<span class="badge badge-success float-right">${ds}</span>`;
+                    else if(ds.match(/CLOSING/i)) dealBadge = `<span class="badge badge-warning float-right">${ds}</span>`;
+                    else dealBadge = `<span class="badge bg-secondary float-right text-white">${ds}</span>`;
+                }
+
+                // Perk tags
+                let perksHtml = '';
+                if(t.perks && t.perks.length > 0) {
+                    t.perks.forEach(p => perksHtml += `<span class="perk-badge">${p}</span>`);
+                }
+
+                const tierDiv = document.createElement('div');
+                tierDiv.className = 'tier-card';
+                tierDiv.id = `tier-card-${t.id}`;
+                
+                let closedHtml = '';
+                let activeHtml = '';
+
+                // Closed Logic: expired early bird OR fully sold out
+                const isExpired = t.isEarlyBird && new Date(t.earlyBirdEndsAt) < new Date();
+                const isSoldOut = t.sold >= t.capacity;
+
+                if (isExpired || isSoldOut) {
+                    closedHtml = `<div class="tier-closed-overlay">${isSoldOut ? 'SOLD OUT' : 'CLOSED'}</div>`;
+                } else {
+                    activeHtml = `
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                            <select id="qty-${t.id}" class="form-control" style="width:80px; display:inline-block;">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}">${n}</option>`).join('')}
+                            </select>
+                            <button class="btn btn-primary" onclick='openModal(${JSON.stringify(t)})'>Book Now</button>
+                        </div>
+                    `;
+                }
+
+                tierDiv.innerHTML = `
+                    ${closedHtml}
+                    ${dealBadge}
+                    <h4 style="margin-bottom:4px;">${t.name}</h4>
+                    <h3 class="text-success mb-2">${priceStr}</h3>
+                    <div style="margin-bottom:10px;">${perksHtml}</div>
+                    <div style="font-size:0.8rem; color:var(--secondary); display:flex; justify-content:space-between;">
+                        <span><span id="tsold-${t.id}">${t.sold}</span> / <span id="tcap-${t.id}">${t.capacity}</span> booked</span>
+                    </div>
+                    <div class="capacity-bar"><div class="capacity-fill" id="tfill-${t.id}" style="width:${pct}%"></div></div>
+                    ${activeHtml}
+                `;
+                container.appendChild(tierDiv);
+            });
+        }
+
+        function updateTierCapacityUI(tierId, sold, cap) {
+            const soldEl = document.getElementById(`tsold-${tierId}`);
+            if(soldEl) {
+                soldEl.textContent = sold;
+                document.getElementById(`tcap-${tierId}`).textContent = cap;
+                const pct = (sold/cap)*100;
+                document.getElementById(`tfill-${tierId}`).style.width = `${pct}%`;
+            }
+        }
+
+        // --- BOOKING LOGIC ---
+
+        function openModal(tierObj) {
+            if (!api.isAuthenticated()) {
+                window.location.href = `/login.html?redirect=event-detail.html?id=${eventId}`;
+                return;
+            }
+            selectedTier = tierObj;
+            selectedQty = parseInt(document.getElementById(`qty-${tierObj.id}`).value);
+            
+            const isFree = selectedTier.price === 0;
+            const total = selectedTier.price * selectedQty;
+            
+            document.getElementById('bookingSummary').innerHTML = `
+                <h4>Booking Summary</h4>
+                <p><b>Tier:</b> ${selectedTier.name}</p>
+                <p><b>Quantity:</b> ${selectedQty}</p>
+                <p><b>Total:</b> <span class="text-success">KES ${total}</span></p>
+            `;
+
+            // Age gate check
+            const ageContainer = document.getElementById('ageGateContainer');
+            if(currentEvent.minAge > 0) {
+                ageContainer.classList.remove('d-none');
+                const today = new Date();
+                today.setFullYear(today.getFullYear() - currentEvent.minAge);
+                document.getElementById('dobInput').max = today.toISOString().split('T')[0];
+            } else {
+                ageContainer.classList.add('d-none');
+            }
+
+            // Group members
+            const gmc = document.getElementById('groupMembersContainer');
+            gmc.innerHTML = '';
+            if(selectedQty > 1) {
+                gmc.innerHTML = `<h5 class="mb-2">Group Members</h5>`;
+                for(let i=1; i<selectedQty; i++) {
+                    gmc.innerHTML += `<input type="text" id="gm-${i}" class="form-control mb-2" placeholder="Guest ${i} Full Name" required>`;
+                }
+            }
+
+            document.getElementById('mockMpesaFrame').classList.add('d-none');
+            document.getElementById('bookingResult').classList.add('d-none');
+            document.getElementById('bookingFooter').classList.remove('d-none');
+            
+            const btn = document.getElementById('btnConfirmBooking');
+            if (isFree) {
+                btn.textContent = "Confirm Free Booking";
+                btn.onclick = () => submitBooking(false);
+            } else {
+                if(isOffline) {
+                    btn.textContent = "Pay via mock M-Pesa";
+                    btn.onclick = () => {
+                        document.getElementById('mockMpesaFrame').classList.remove('d-none');
+                        document.getElementById('mockAmount').textContent = `KES ${total}`;
+                        document.getElementById('bookingFooter').classList.add('d-none');
+                    };
+                } else {
+                    btn.textContent = "Pay with M-Pesa";
+                    btn.onclick = () => submitBooking(false);
+                }
+            }
+
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        async function submitBooking(isMock) {
+            // Validate age
+            if(currentEvent.minAge > 0) {
+                const dobVal = document.getElementById('dobInput').value;
+                if(!dobVal) { alert("Please enter your Date of Birth"); return; }
+                const dob = new Date(dobVal);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const m = today.getMonth() - dob.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) { age--; }
+                if(age < currentEvent.minAge) {
+                    document.getElementById('ageError').classList.remove('d-none');
+                    return;
+                }
+            }
+            document.getElementById('ageError').classList.add('d-none');
+
+            const groupMembers = [];
+            for(let i=1; i<selectedQty; i++) {
+                const val = document.getElementById(`gm-${i}`)?.value;
+                if(!val) { alert("Please fill all guest names"); return; }
+                groupMembers.push(val);
+            }
+
+            const payload = {
+                eventId: parseInt(eventId),
+                tierId: selectedTier.id,
+                quantity: selectedQty,
+                groupMembers: groupMembers,
+                buyerPhoneNumber: "0700000000" // Hardcoded for demo, normally from user profile
+            };
+
+            const btn = document.getElementById('btnConfirmBooking');
+            try {
+                btn.disabled = true;
+                btn.textContent = "Processing...";
+                
+                const response = await api.post('/api/tickets/book', payload);
+                
+                if (response.redirectUrl) {
+                    // Online STK Push flow
+                    window.location.href = response.redirectUrl;
+                } else {
+                    // Free or offline success
+                    showBookingSuccess(response);
+                }
+            } catch (err) {
+                alert("Booking failed: " + err.message);
+                btn.disabled = false;
+                btn.textContent = "Confirm Booking";
+            }
+        }
+
+        function showBookingSuccess(res) {
+            document.getElementById('mockMpesaFrame').classList.add('d-none');
+            document.getElementById('bookingFooter').classList.add('d-none');
+            const resultBox = document.getElementById('bookingResult');
+            resultBox.classList.remove('d-none');
+            resultBox.classList.add('border-success');
+            
+            // Assume response is the BookingResponse DTO
+            const primaryTicket = res.tickets[0];
+            const qrUrl = api.baseUrl + `/api/tickets/${primaryTicket.ticketCode}/qr`;
+
+            resultBox.innerHTML = `
+                <h3 class="text-success mb-3">Booking Confirmed!</h3>
+                <img src="${qrUrl}" alt="QR Code" style="width:200px; height:200px;">
+                <p class="mt-2"><b>Ticket Code:</b> ${primaryTicket.ticketCode}</p>
+                <div class="mt-3">
+                    <a href="${qrUrl}" download target="_blank" class="btn btn-outline-primary btn-sm">Download QR</a>
+                    <a href="https://wa.me/?text=I'm going to ${currentEvent.title}! Join me!" target="_blank" class="btn btn-success btn-sm">Share on WhatsApp</a>
+                </div>
+            `;
+        }
+
+        // --- REACTIONS ---
+        async function toggleReaction(type) {
+            if(!api.isAuthenticated()){ alert("Please login to react."); return; }
+            try {
+                await api.post(`/api/events/${eventId}/react`, { type });
+                // Optimistic UI update
+                const iCount = document.getElementById('countInterested');
+                const gCount = document.getElementById('countGoing');
+                
+                if(currentUserReaction === type) {
+                    // Removing
+                    if(type==='INTERESTED') iCount.textContent = Math.max(0, parseInt(iCount.textContent)-1);
+                    if(type==='GOING') gCount.textContent = Math.max(0, parseInt(gCount.textContent)-1);
+                    toggleBtnState(null);
+                } else {
+                    // Switching or adding
+                    if(currentUserReaction==='INTERESTED') iCount.textContent = Math.max(0, parseInt(iCount.textContent)-1);
+                    if(currentUserReaction==='GOING') gCount.textContent = Math.max(0, parseInt(gCount.textContent)-1);
+                    
+                    if(type==='INTERESTED') iCount.textContent = parseInt(iCount.textContent)+1;
+                    if(type==='GOING') gCount.textContent = parseInt(gCount.textContent)+1;
+                    toggleBtnState(type);
+                }
+            } catch (e) { console.error("Reaction failed:", e); }
+        }
+
+        function toggleBtnState(type) {
+            currentUserReaction = type;
+            document.getElementById('btnInterested').classList.remove('active');
+            document.getElementById('btnGoing').classList.remove('active');
+            if(type==='INTERESTED') document.getElementById('btnInterested').classList.add('active');
+            if(type==='GOING') document.getElementById('btnGoing').classList.add('active');
+        }
+
+        function updateReactionCounts(counts) {
+            if(!counts) return;
+            document.getElementById('countInterested').textContent = counts.INTERESTED || 0;
+            document.getElementById('countGoing').textContent = counts.GOING || 0;
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert("Link copied to clipboard!");
+        }
+
+        // --- COMMENTS ---
+        async function loadComments() {
+            try {
+                const comments = await api.get(`/api/events/${eventId}/comments`);
+                const tree = buildCommentTree(comments);
+                const container = document.getElementById('commentsList');
+                container.innerHTML = '';
+                tree.forEach(c => container.appendChild(renderComment(c, 0)));
+            } catch (e) { console.error("Comments failed", e); }
+        }
+
+        function buildCommentTree(flatList) {
+            const map = {};
+            const roots = [];
+            flatList.forEach(c => { c.children = []; map[c.id] = c; });
+            flatList.forEach(c => {
+                if(c.parentId && map[c.parentId]) map[c.parentId].children.push(c);
+                else roots.push(c);
+            });
+            return roots;
+        }
+
+        function renderComment(c, depth) {
+            const div = document.createElement('div');
+            div.className = depth > 0 ? 'comment comment-reply' : 'comment';
+            
+            const meta = `<span class="text-secondary" style="font-size:0.8rem;">${new Date(c.createdAt).toLocaleString()}</span>`;
+            const header = c.softDeleted 
+                ? `<span class="text-secondary">[User]</span>` 
+                : `<strong style="color:var(--primary)">${c.userFullName}</strong>`;
+            
+            const body = c.softDeleted 
+                ? `<i class="text-secondary">[comment removed]</i>`
+                : c.body;
+
+            const replyBtn = (!c.softDeleted && api.isAuthenticated()) 
+                ? `<button class="btn btn-sm" style="padding:0; color:var(--info); background:none; text-decoration:underline;" onclick="toggleReplyBox(${c.id})">Reply</button>`
+                : '';
+
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between;">${header} ${meta}</div>
+                <div class="mt-2 mb-2">${body}</div>
+                ${replyBtn}
+                <div id="reply-box-${c.id}" class="d-none mt-2">
+                    <textarea id="reply-input-${c.id}" class="form-control mb-1" rows="1" placeholder="Type reply..."></textarea>
+                    <button class="btn btn-primary btn-sm" onclick="postComment(${c.id})">Submit</button>
+                    <button class="btn btn-secondary btn-sm" onclick="toggleReplyBox(${c.id})">Cancel</button>
+                </div>
+            `;
+
+            if (c.children.length > 0) {
+                c.children.forEach(child => div.appendChild(renderComment(child, depth+1)));
+            }
+            return div;
+        }
+
+        function toggleReplyBox(id) {
+            document.getElementById(`reply-box-${id}`).classList.toggle('d-none');
+        }
+
+        async function postComment(parentId) {
+            let inputId = parentId ? `reply-input-${parentId}` : 'newCommentBody';
+            let body = document.getElementById(inputId).value.trim();
+            if(!body) return;
+            try {
+                await api.post(`/api/events/${eventId}/comments`, { body, parentId });
+                document.getElementById(inputId).value = '';
+                loadComments(); // reload tree
+            } catch (e) { alert("Failed to post: " + e.message); }
+        }
+
+        // --- REVIEWS ---
+        async function loadReviews() {
+            try {
+                // Determine if user can review
+                if (api.isAuthenticated()) {
+                    // Logic: Normally we'd check if ev is COMPLETED and user holds USED ticket.
+                    // For now, always show form if auth for demo simplicity, or hide via CSS logic.
+                    // The backend will enforce the USED requirement anyway.
+                    document.getElementById('reviewFormContainer').classList.remove('d-none');
+                }
+
+                const summary = await api.get(`/api/events/${eventId}/reviews/summary`);
+                if(summary.averageScore > 0) {
+                    document.getElementById('reviewSummary').textContent = `${summary.averageScore.toFixed(1)} ⭐ (${summary.totalReviews} reviews)`;
+                } else {
+                    document.getElementById('reviewSummary').textContent = "No reviews yet.";
+                }
+
+                const page = await api.get(`/api/events/${eventId}/reviews?page=0&size=20`);
+                const container = document.getElementById('reviewsList');
+                container.innerHTML = '';
+                if(page.content.length === 0) { container.innerHTML="<p class='text-secondary'>No written reviews.</p>"; }
+                page.content.forEach(r => {
+                    const stars = "⭐".repeat(r.score);
+                    container.innerHTML += `
+                        <div style="border-bottom:1px solid var(--mid-gray); padding: 10px 0;">
+                            <div>${stars} <span class="text-secondary float-right">${new Date(r.createdAt).toLocaleDateString()}</span></div>
+                            <div class="mt-1">${r.comment || ''}</div>
+                            <div style="font-size:0.8rem; color:var(--security)">- ${r.reviewerEmailMasked}</div>
+                        </div>
+                    `;
+                });
+            } catch (e) { console.log("Reviews not loaded or error"); }
+        }
+
+        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                score: parseInt(document.getElementById('reviewRating').value),
+                comment: document.getElementById('reviewComment').value
+            };
+            try {
+                await api.post(`/api/events/${eventId}/reviews`, payload);
+                alert("Review submitted!");
+                document.getElementById('reviewComment').value = '';
+                loadReviews();
+            } catch (e) { alert("Error: " + e.message); }
+        });
+
+        // --- OTHER EVENTS ---
+        async function loadOtherEvents() {
+            try {
+                const recs = await api.get('/api/recommendations/personal');
+                if (recs && recs.length > 0) {
+                    document.getElementById('otherEventsSection').classList.remove('d-none');
+                    const grid = document.getElementById('otherEventsGrid');
+                    recs.slice(0,3).forEach(ev => {
+                        const bg = ev.bannerImageUrl ? (ev.bannerImageUrl.startsWith('http')?ev.bannerImageUrl:api.baseUrl+ev.bannerImageUrl) : 'https://via.placeholder.com/300x150';
+                        grid.innerHTML += `
+                            <a href="event-detail.html?id=${ev.id}" class="event-card" style="min-width:250px; text-decoration:none; color:inherit;">
+                                <img src="${bg}" style="height:120px; object-fit:cover; width:100%;">
+                                <div class="p-2"><b>${ev.title}</b><p class="text-secondary" style="font-size:0.8rem;">${new Date(ev.startTime).toLocaleDateString()}</p></div>
+                            </a>
+                        `;
+                    });
+                }
+            } catch (e) { console.log("Other events skip"); }
+        }
+
+        // --- Lightbox ---
+        function openLightbox(url) {
+            document.getElementById('lightboxImg').src = url;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+    </script>
+</body>
+</html>

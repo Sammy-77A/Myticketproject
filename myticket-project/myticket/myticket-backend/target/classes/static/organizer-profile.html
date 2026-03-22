@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Profile - MyTicket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .profile-header {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-md);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">🎫 MyTicket</a>
+        <div class="nav-actions" id="navActions"></div>
+    </nav>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-avatar" id="orgAvatar">O</div>
+            <h1 id="orgName">Organizer Name</h1>
+            <p class="text-secondary mt-2 mb-3" id="orgBio" style="max-width:600px; margin:0 auto;"></p>
+            <p class="mb-3"><b id="orgFollowers">0</b> Followers</p>
+            <button class="btn btn-outline-primary" id="btnFollow" onclick="toggleFollow()" style="padding: 0.5rem 2rem;">Follow</button>
+        </div>
+
+        <h2 class="section-title">Events by this Organizer</h2>
+        
+        <div class="tabs-header mb-4" style="border-bottom: 2px solid var(--mid-gray); display:flex; gap:1rem;">
+            <button class="tab-btn active" id="btnUpcoming" style="background:none; border:none; padding:10px; font-weight:bold; border-bottom:3px solid var(--primary);">Upcoming Events</button>
+            <button class="tab-btn text-secondary" id="btnPast" style="background:none; border:none; padding:10px; border-bottom:3px solid transparent;">Past Events</button>
+        </div>
+
+        <div class="event-grid" id="orgEventsGrid">
+            <p>Loading events...</p>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const orgId = urlParams.get('id');
+        let isFollowing = false; // We would ideally get this state from the backend
+        let allEvents = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if(!orgId) { document.body.innerHTML = "<h2 class='text-center mt-5'>Organizer Not Found</h2>"; return; }
+            
+            const nav = document.getElementById('navActions');
+            if(api.isAuthenticated()) {
+                nav.innerHTML = `<a href="/account.html" class="btn btn-outline-primary btn-sm">My Account</a>`;
+            } else {
+                nav.innerHTML = `<a href="/login.html" class="btn btn-primary btn-sm">Login</a>`;
+                document.getElementById('btnFollow').style.display = 'none';
+            }
+
+            try {
+                // The instructions say GET /api/organizers/{id}/profile (we implemented this earlier)
+                const profile = await api.get(`/api/organizers/${orgId}/profile`);
+                document.getElementById('orgName').textContent = profile.organizationName || profile.fullName;
+                document.getElementById('orgAvatar').textContent = (profile.organizationName || profile.fullName).charAt(0).toUpperCase();
+                document.getElementById('orgBio').textContent = profile.bio || 'Event Organizer on MyTicket.';
+                document.getElementById('orgFollowers').textContent = profile.followerCount || 0;
+
+                // Also fetch events (we could hit /api/events with organizerId filter, or assume it's included in profile)
+                // Let's assume hitting /api/events?organizerId={orgId} if we need to
+                const evPage = await api.get(`/api/events?organizerId=${orgId}&size=50`);
+                allEvents = evPage.content;
+                renderEvents(true);
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('orgName').textContent = "Error loading profile.";
+            }
+
+            document.getElementById('btnUpcoming').onclick = (e) => {
+                e.target.style.borderBottomColor = 'var(--primary)';
+                e.target.classList.remove('text-secondary');
+                document.getElementById('btnPast').style.borderBottomColor = 'transparent';
+                document.getElementById('btnPast').classList.add('text-secondary');
+                renderEvents(true);
+            };
+            document.getElementById('btnPast').onclick = (e) => {
+                e.target.style.borderBottomColor = 'var(--primary)';
+                e.target.classList.remove('text-secondary');
+                document.getElementById('btnUpcoming').style.borderBottomColor = 'transparent';
+                document.getElementById('btnUpcoming').classList.add('text-secondary');
+                renderEvents(false);
+            };
+        });
+
+        async function toggleFollow() {
+            try {
+                // Toggle follow logic (POST /api/organizers/{id}/follow from Phase 4)
+                await api.post(`/api/organizers/${orgId}/follow`);
+                isFollowing = !isFollowing;
+                const btn = document.getElementById('btnFollow');
+                if(isFollowing) {
+                    btn.classList.add('btn-primary');
+                    btn.classList.remove('btn-outline-primary');
+                    btn.textContent = 'Following';
+                    let c = parseInt(document.getElementById('orgFollowers').textContent);
+                    document.getElementById('orgFollowers').textContent = c + 1;
+                } else {
+                    btn.classList.add('btn-outline-primary');
+                    btn.classList.remove('btn-primary');
+                    btn.textContent = 'Follow';
+                    let c = parseInt(document.getElementById('orgFollowers').textContent);
+                    document.getElementById('orgFollowers').textContent = Math.max(0, c - 1);
+                }
+            } catch (e) { alert("Failed to toggle follow."); }
+        }
+
+        function renderEvents(isUpcoming) {
+            const grid = document.getElementById('orgEventsGrid');
+            grid.innerHTML = '';
+            
+            const now = Date.now();
+            let filtered = allEvents.filter(ev => {
+                const evTime = new Date(ev.startTime).getTime();
+                return isUpcoming ? evTime >= now : evTime < now;
+            });
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<p class="text-secondary mt-3">No ${isUpcoming?'upcoming':'past'} events.</p>`;
+                return;
+            }
+
+            filtered.forEach(ev => {
+                const bgUrl = ev.bannerImageUrl ? (ev.bannerImageUrl.startsWith('http') ? ev.bannerImageUrl : api.baseUrl + ev.bannerImageUrl) : 'https://via.placeholder.com/300x150';
+                grid.innerHTML += `
+                    <a href="event-detail.html?id=${ev.id}" class="event-card" style="text-decoration:none; color:inherit;">
+                        <img src="${bgUrl}" style="height:150px; object-fit:cover; width:100%;">
+                        <div class="p-3">
+                            <h4 class="mb-2">${ev.title}</h4>
+                            <p class="text-secondary" style="font-size:0.9rem;">📅 ${new Date(ev.startTime).toLocaleDateString()}</p>
+                            <p class="text-secondary" style="font-size:0.9rem;">📍 ${ev.venue}</p>
+                        </div>
+                    </a>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

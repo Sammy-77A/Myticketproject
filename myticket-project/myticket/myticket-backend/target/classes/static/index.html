@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTicket - Discover Events</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Homepage specific styles */
+        .hero {
+            position: relative;
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 4rem 2rem;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 5px solid var(--primary);
+            background-size: cover;
+            background-position: center;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .hero-meta {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: #e9ecef;
+        }
+        .newsletter {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-radius: var(--radius-md);
+            margin-top: 4rem;
+        }
+        .newsletter form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 1.5rem auto 0;
+        }
+        .newsletter input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: var(--radius-sm);
+        }
+        .newsletter button {
+            background-color: var(--dark-gray);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: bold;
+        }
+        .badge-free {
+            background-color: var(--success);
+            color: white;
+        }
+        .badge-age {
+            background-color: var(--danger);
+            color: white;
+        }
+        .nav-bell {
+            position: relative;
+            font-size: 1.5rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-bell-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">🎫 MyTicket</a>
+        
+        <div class="nav-search">
+            <input type="text" id="searchInput" placeholder="Search events...">
+        </div>
+        
+        <div class="nav-actions" id="navActions">
+            <!-- Injected by JS based on auth state -->
+        </div>
+    </nav>
+
+    <!-- Hero Banner (Featured Event) -->
+    <header class="hero" id="heroBanner">
+        <div class="hero-content">
+            <h1 class="hero-title" id="heroTitle">Loading Featured Event...</h1>
+            <div class="hero-meta" id="heroMeta">Date &bull; Venue</div>
+            <a href="#" class="btn btn-primary" id="heroCta" style="font-size: 1.25rem; padding: 0.75rem 2rem;">Get Tickets</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Category Filters -->
+        <section class="section pb-0">
+            <div class="filter-pills" id="categoryPills">
+                <button class="pill active" data-id="">All</button>
+                <!-- Categories injected here -->
+            </div>
+        </section>
+
+        <!-- Trending -->
+        <section class="section" id="trendingSection">
+            <h2 class="section-title">🔥 Trending This Week</h2>
+            <div class="horizontal-scroll" id="trendingGrid">
+                <p>Loading trending events...</p>
+            </div>
+        </section>
+
+        <!-- Recommended (Auth Gated) -->
+        <section class="section d-none" id="recommendedSection">
+            <h2 class="section-title">✨ Recommended For You</h2>
+            <div class="horizontal-scroll" id="recommendedGrid">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Upcoming Grid -->
+        <section class="section">
+            <h2 class="section-title" id="upcomingTitle">All Upcoming Events</h2>
+            <div class="event-grid" id="upcomingGrid">
+                <!-- Injected via JS -->
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-outline-primary" id="loadMoreBtn">Load More</button>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h2>Never Miss an Event</h2>
+            <p>Subscribe to our newsletter for exclusive early-bird access and event updates.</p>
+            <form id="newsletterForm">
+                <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+            <p id="newsletterMsg" class="mt-3 d-none"></p>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container" style="display:flex; justify-content: space-between; flex-wrap: wrap;">
+            <div>
+                <h3>🎫 MyTicket</h3>
+                <p>Your premier student event ticketing platform.</p>
+                <p>&copy; 2026 MyTicket. All rights reserved.</p>
+            </div>
+            <div>
+                <h5>Useful Links</h5>
+                <p><a href="/">Home</a></p>
+                <p><a href="/login.html">Login / Register</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="api.js"></script>
+    <script>
+        // State
+        let currentCategory = '';
+        let currentSearch = '';
+        let currentPage = 0;
+        let isLastPage = false;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initNav();
+            loadCategories();
+            loadFeaturedEvent();
+            loadTrending();
+            if (api.isAuthenticated()) {
+                loadRecommended();
+            }
+            loadUpcoming(true);
+
+            // Search listener
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    currentSearch = e.target.value;
+                    currentCategory = ''; // clear category on search
+                    document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
+                    document.querySelector('#categoryPills .pill[data-id=""]').classList.add('active');
+                    loadUpcoming(true);
+                    
+                    // Update section title logic
+                    document.getElementById('upcomingTitle').innerText = 
+                        currentSearch ? `Search Results for "${currentSearch}"` : "All Upcoming Events";
+                }
+            });
+
+            // Load more
+            document.getElementById('loadMoreBtn').addEventListener('click', () => {
+                if (!isLastPage) {
+                    currentPage++;
+                    loadUpcoming(false);
+                }
+            });
+
+            // Newsletter
+            document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail').value;
+                const msg = document.getElementById('newsletterMsg');
+                try {
+                    await api.post('/api/subscribe', { email });
+                    msg.textContent = "Successfully subscribed! Please check your email.";
+                    msg.className = "mt-3 text-white";
+                } catch (err) {
+                    msg.textContent = err.message || "Failed to subscribe.";
+                    msg.className = "mt-3 text-warning";
+                }
+                msg.classList.remove('d-none');
+            });
+        });
+
+        function initNav() {
+            const nav = document.getElementById('navActions');
+            if (api.isAuthenticated()) {
+                nav.innerHTML = `
+                    <a href="/notifications.html" class="nav-bell" id="navBell" title="Notifications">
+                        🔔<span class="nav-bell-badge d-none" id="bellBadge">0</span>
+                    </a>
+                    <a href="/profile.html" class="avatar" style="text-decoration:none" title="My Account">Me</a>
+                    <button class="btn btn-outline-primary btn-sm" onclick="api.logout()">Logout</button>
+                `;
+                checkNotifications();
+            } else {
+                nav.innerHTML = `
+                    <a href="/login.html" class="btn btn-outline-primary">Login</a>
+                    <a href="/register.html" class="btn btn-primary">Register</a>
+                `;
+            }
+        }
+
+        async function checkNotifications() {
+            try {
+                const countObj = await api.get('/api/notifications/unread-count');
+                const badge = document.getElementById('bellBadge');
+                if (countObj && countObj.count > 0) {
+                    badge.textContent = countObj.count > 99 ? '99+' : countObj.count;
+                    badge.classList.remove('d-none');
+                }
+            } catch (e) { console.error("Notification check failed", e); }
+        }
+
+        async function loadCategories() {
+            try {
+                const cats = await api.get('/api/categories');
+                const container = document.getElementById('categoryPills');
+                cats.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.className = 'pill';
+                    btn.textContent = c.name;
+                    btn.setAttribute('data-id', c.id);
+                    btn.onclick = () => {
+                        document.querySelectorAll('#categoryPills .pill').forEach(p => p.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentCategory = c.id;
+                        currentSearch = '';
+                        document.getElementById('searchInput').value = '';
+                        document.getElementById('upcomingTitle').innerText = `Events in ${c.name}`;
+                        loadUpcoming(true);
+                    };
+                    container.appendChild(btn);
+                });
+            } catch (e) { console.error("Categories failed", e); }
+        }
+
+        async function loadFeaturedEvent() {
+            try {
+                // Just snag the first upcoming event for the hero
+                const page = await api.get('/api/events?status=UPCOMING&page=0&size=1');
+                if (page.content && page.content.length > 0) {
+                    const ev = page.content[0];
+                    document.getElementById('heroTitle').textContent = ev.title;
+                    const dateStr = new Date(ev.startTime).toLocaleString('en-US', {weekday:'short', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+                    document.getElementById('heroMeta').innerHTML = `${dateStr} &nbsp;&bull;&nbsp; ${ev.venue}`;
+                    document.getElementById('heroCta').href = `event-detail.html?id=${ev.id}`;
+                    if (ev.bannerImageUrl) {
+                        const bgUrl = ev.bannerImageUrl.startsWith('http') ? ev.bannerImageUrl : (api.baseUrl + ev.bannerImageUrl);
+                        document.getElementById('heroBanner').style.backgroundImage = `url('${bgUrl}')`;
+                    }
+                } else {
+                    document.getElementById('heroTitle').textContent = "No Upcoming Events";
+                    document.getElementById('heroMeta').innerHTML = "Check back later!";
+                    document.getElementById('heroCta').classList.add('d-none');
+                }
+            } catch (e) { console.error("Hero failed", e); }
+        }
+
+        async function loadTrending() {
+            const grid = document.getElementById('trendingGrid');
+            try {
+                const trends = await api.get('/api/recommendations/trending');
+                grid.innerHTML = '';
+                if (!trends || trends.length === 0) {
+                    grid.innerHTML = '<p>No trending events to show.</p>';
+                    return;
+                }
+                trends.forEach(ev => grid.appendChild(createEventCard(ev)));
+            } catch (e) { grid.innerHTML = '<p class="text-secondary">Unable to load trending events.</p>'; }
+        }
+
+        async function loadRecommended() {
+            const grid = document.getElementById('recommendedGrid');
+            try {
+                const recs = await api.get('/api/recommendations/personal');
+                if (recs && recs.length > 0) {
+                    document.getElementById('recommendedSection').classList.remove('d-none');
+                    grid.innerHTML = '';
+                    recs.forEach(ev => grid.appendChild(createEventCard(ev)));
+                }
+            } catch (e) { console.error("Recs failed", e); }
+        }
+
+        async function loadUpcoming(reset = false) {
+            if (reset) {
+                currentPage = 0;
+                document.getElementById('upcomingGrid').innerHTML = '';
+                document.getElementById('loadMoreBtn').style.display = 'inline-block';
+            }
+            
+            const btn = document.getElementById('loadMoreBtn');
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+
+            let url = `/api/events?status=UPCOMING&page=${currentPage}&size=12`;
+            if (currentCategory) url += `&categoryId=${currentCategory}`;
+            if (currentSearch) url += `&search=${encodeURIComponent(currentSearch)}`;
+
+            try {
+                const page = await api.get(url);
+                const grid = document.getElementById('upcomingGrid');
+                if (page.content.length === 0 && reset) {
+                    grid.innerHTML = '<p>No events found matching your criteria.</p>';
+                } else {
+                    page.content.forEach(ev => grid.appendChild(createEventCard(ev)));
+                }
+                isLastPage = page.last;
+                if (isLastPage) btn.style.display = 'none';
+            } catch (e) {
+                console.error("Upcoming failed", e);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Load More';
+            }
+        }
+
+        // Card builder
+        function createEventCard(ev) {
+            const a = document.createElement('a');
+            a.className = 'event-card';
+            a.href = `event-detail.html?id=${ev.id}`;
+            a.style.color = 'inherit';
+            a.style.textDecoration = 'none';
+
+            const bgUrl = ev.bannerImageUrl ? (ev.bannerImageUrl.startsWith('http') ? ev.bannerImageUrl : api.baseUrl + ev.bannerImageUrl) : 'https://via.placeholder.com/400x200?text=No+Image';
+            const dateStr = new Date(ev.startTime).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+            
+            let badges = '';
+            if (ev.minAge > 0) badges += `<span class="badge badge-age">${ev.minAge}+</span> `;
+            // Price logic approximation: free vs paid based on tiers. But API returns summary price?
+            // Actually API response might not have lowest price unless appended. Let's just show category badge.
+            let catName = ev.category ? ev.category.name : '';
+            
+            a.innerHTML = `
+                <div class="card-img-wrapper">
+                    <img class="card-img" src="${bgUrl}" alt="Event Banner">
+                    ${catName ? `<div class="card-badge bg-primary text-white" style="top:10px; right:10px; position:absolute; padding:4px 8px; border-radius:4px; font-size:12px;">${catName}</div>` : ''}
+                    <div style="position:absolute; bottom:10px; right:10px;">${badges}</div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">${ev.title}</h3>
+                    <div class="card-info">📅 ${dateStr} &nbsp;&bull;&nbsp; 📍 ${ev.venue}</div>
+                    <div class="card-footer">
+                        <div class="card-reactions">
+                            👍 ${ev.reactionCounts?.INTERESTED || 0}
+                            ✅ ${ev.reactionCounts?.GOING || 0}
+                        </div>
+                    </div>
+                </div>
+            `;
+            return a;
+        }
+    </script>
+</body>
+</html>

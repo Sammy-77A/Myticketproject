@@ -1,0 +1,151 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.myticket:myticket-backend >--------------------
+[INFO] Building MyTicket — Backend 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ myticket-backend ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 12 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ myticket-backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 91 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[55,14] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable admin of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[63,18] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable organizer of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[67,9] cannot find symbol
+  symbol:   class OrganizerProfile
+  location: class com.myticket.backend.config.DataSeeder
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[67,43] cannot find symbol
+  symbol:   class OrganizerProfile
+  location: class com.myticket.backend.config.DataSeeder
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[76,17] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable student1 of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[84,17] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable student2 of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[92,17] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable student3 of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[102,15] cannot find symbol
+  symbol:   method setStartTime(java.time.LocalDateTime)
+  location: variable event1 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[103,15] cannot find symbol
+  symbol:   method setEndTime(java.time.LocalDateTime)
+  location: variable event1 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[112,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[114,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[120,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[122,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[129,15] cannot find symbol
+  symbol:   method setStartTime(java.time.LocalDateTime)
+  location: variable event2 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[130,15] cannot find symbol
+  symbol:   method setEndTime(java.time.LocalDateTime)
+  location: variable event2 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[139,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[141,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[143,13] cannot find symbol
+  symbol:   method setEarlyBirdEndsAt(java.time.LocalDateTime)
+  location: variable e2t1 of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[149,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[151,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[158,15] cannot find symbol
+  symbol:   method setStartTime(java.time.LocalDateTime)
+  location: variable event3 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[159,15] cannot find symbol
+  symbol:   method setEndTime(java.time.LocalDateTime)
+  location: variable event3 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[168,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[171,13] cannot find symbol
+  symbol:   method setEarlyBirdEndsAt(java.time.LocalDateTime)
+  location: variable e3t1 of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[177,23] incompatible types: possible lossy conversion from double to int
+[INFO] 25 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  22.088 s
+[INFO] Finished at: 2026-03-22T13:31:53+03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project myticket-backend: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[55,14] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable admin of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[63,18] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable organizer of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[67,9] cannot find symbol
+[ERROR]   symbol:   class OrganizerProfile
+[ERROR]   location: class com.myticket.backend.config.DataSeeder
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[67,43] cannot find symbol
+[ERROR]   symbol:   class OrganizerProfile
+[ERROR]   location: class com.myticket.backend.config.DataSeeder
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[76,17] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable student1 of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[84,17] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable student2 of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[92,17] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable student3 of type com.myticket.backend.model.User
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[102,15] cannot find symbol
+[ERROR]   symbol:   method setStartTime(java.time.LocalDateTime)
+[ERROR]   location: variable event1 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[103,15] cannot find symbol
+[ERROR]   symbol:   method setEndTime(java.time.LocalDateTime)
+[ERROR]   location: variable event1 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[112,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[114,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[120,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[122,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[129,15] cannot find symbol
+[ERROR]   symbol:   method setStartTime(java.time.LocalDateTime)
+[ERROR]   location: variable event2 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[130,15] cannot find symbol
+[ERROR]   symbol:   method setEndTime(java.time.LocalDateTime)
+[ERROR]   location: variable event2 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[139,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[141,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[143,13] cannot find symbol
+[ERROR]   symbol:   method setEarlyBirdEndsAt(java.time.LocalDateTime)
+[ERROR]   location: variable e2t1 of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[149,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[151,13] incompatible types: no instance(s) of type variable(s) E exist so that java.util.List<E> conforms to java.lang.String
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[158,15] cannot find symbol
+[ERROR]   symbol:   method setStartTime(java.time.LocalDateTime)
+[ERROR]   location: variable event3 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[159,15] cannot find symbol
+[ERROR]   symbol:   method setEndTime(java.time.LocalDateTime)
+[ERROR]   location: variable event3 of type com.myticket.backend.model.Event
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[168,23] incompatible types: possible lossy conversion from double to int
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[171,13] cannot find symbol
+[ERROR]   symbol:   method setEarlyBirdEndsAt(java.time.LocalDateTime)
+[ERROR]   location: variable e3t1 of type com.myticket.backend.model.TicketTier
+[ERROR] /C:/Users/sam/Documents/Myticketproject/myticket-project/myticket/myticket-backend/src/main/java/com/myticket/backend/config/DataSeeder.java:[177,23] incompatible types: possible lossy conversion from double to int
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

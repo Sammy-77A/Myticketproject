@@ -1,5 +1,6 @@
 com\myticket\backend\repository\CommentRepository.class
 com\myticket\backend\controller\ReviewController.class
+com\myticket\backend\config\DataSeeder.class
 com\myticket\backend\repository\UserInterestRepository.class
 com\myticket\backend\service\AuditLogService.class
 com\myticket\backend\model\Notification.class
