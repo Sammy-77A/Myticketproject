@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MyTicket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .auth-container {
+            max-width: 450px;
+            margin: 4rem auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .auth-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--mid-gray);
+        }
+        .divider::before { margin-right: .5em; }
+        .divider::after { margin-left: .5em; }
+        
+        .btn-google {
+            background-color: white;
+            color: #444;
+            border: 1px solid #ddd;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 0.75rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-google:hover:not(:disabled) {
+            background-color: #f8f9fa;
+        }
+        .btn-google:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-google img {
+            width: 20px; height: 20px;
+        }
+        .tooltip {
+            position: relative;
+            display: block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: var(--dark-gray);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; 
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo">🎫 MyTicket</a>
+        <div class="nav-actions">
+            <a href="/register.html" class="btn btn-primary">Register</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="auth-container">
+            <h1 class="auth-title">Welcome Back</h1>
+            
+            <form id="loginForm">
+                <div id="globalError" class="text-danger mb-3 d-none text-center"></div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="jane@student.maseno.ac.ke" required>
+                </div>
+
+                <div class="form-group">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                        <label class="form-label">Password</label>
+                        <a href="/forgot-password.html" class="text-secondary" style="font-size:0.8rem;">Forgot Password?</a>
+                    </div>
+                    <input type="password" id="loginPassword" class="form-control" required>
+                </div>
+
+                <button type="submit" id="loginBtn" class="btn btn-primary" style="width:100%; font-size:1.1rem; padding:0.75rem; margin-top:0.5rem;">Log In</button>
+            </form>
+            
+            <div class="divider">OR</div>
+            
+            <div class="tooltip" id="googleTooltip">
+                <button type="button" id="googleBtn" class="btn btn-google" onclick="location.href='/oauth2/authorization/google'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/archive/c/c1/20230224164344%21Google_%22G%22_logo.svg" alt="Google">
+                    Sign in with Google
+                </button>
+                <span class="tooltiptext d-none" id="googleTooltipText">Google Sign-in is not available in offline mode.</span>
+            </div>
+
+            <p class="text-center mt-4 text-secondary" style="font-size:0.9rem;">
+                Don't have an account? <a href="/register.html">Register here</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Very basic forgot password placeholder required by phase instructions -->
+    <div id="forgotPwDialog" class="d-none"></div>
+
+    <script src="api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (api.isAuthenticated()) {
+                window.location.href = '/account.html';
+                return;
+            }
+
+            // Check health for online/offline mode
+            try {
+                const health = await api.get('/api/health');
+                if (health && health.mode === 'OFFLINE') {
+                    const gBtn = document.getElementById('googleBtn');
+                    gBtn.disabled = true;
+                    // Prevent navigation
+                    gBtn.onclick = (e) => e.preventDefault();
+                    document.getElementById('googleTooltipText').classList.remove('d-none');
+                }
+            } catch (e) {
+                console.warn("Health check failed:", e);
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('loginBtn');
+            const errorBox = document.getElementById('globalError');
+            
+            const payload = {
+                email: document.getElementById('loginEmail').value,
+                password: document.getElementById('loginPassword').value
+            };
+
+            try {
+                btn.disabled = true;
+                btn.textContent = 'Authenticating...';
+                errorBox.classList.add('d-none');
+
+                const response = await api.post('/api/auth/login', payload);
+                
+                if (response.token) {
+                    localStorage.setItem('myticket_token', response.token);
+                    
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirectUrl = urlParams.get('redirect');
+                    
+                    window.location.href = redirectUrl ? redirectUrl : '/index.html';
+                } else {
+                    throw new Error("Invalid response from server");
+                }
+
+            } catch (err) {
+                errorBox.textContent = err.message || 'Login failed. Please check your credentials.';
+                errorBox.classList.remove('d-none');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Log In';
+            }
+        });
+    </script>
+</body>
+</html>

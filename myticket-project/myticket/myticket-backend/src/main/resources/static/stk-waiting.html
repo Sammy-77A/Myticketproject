@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Payment - MyTicket</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .waiting-box {
+            max-width: 450px;
+            margin: 5rem auto;
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .mpesa-logo {
+            color: #28a745;
+            font-weight: 900;
+            font-size: 1.5rem;
+            font-style: italic;
+        }
+        .pulse-text {
+            animation: pulse-op 1.5s infinite;
+        }
+        @keyframes pulse-op {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+        .phone-mock {
+            background: #212529;
+            color: white;
+            border-radius: 20px;
+            padding: 20px;
+            font-family: monospace;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: left;
+            margin: 2rem auto;
+            position: relative;
+        }
+        .phone-header {
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- ONLINE MODE -->
+        <div id="onlineWaiting" class="waiting-box d-none">
+            <div class="logos">
+                <span class="nav-logo">🎫 MyTicket</span>
+                <span style="color:#aaa;">&times;</span>
+                <span class="mpesa-logo">M-PESA</span>
+            </div>
+            
+            <h2 class="mb-3">Check Your Phone</h2>
+            <p class="text-secondary mb-4">A payment prompt has been sent to your M-Pesa number.</p>
+            
+            <div class="spinner"></div>
+            
+            <h3 class="mt-4 mb-2" id="amountDisplay">KES ---</h3>
+            <p class="mb-4">Enter your M-Pesa PIN on your phone to complete the booking for <b><span id="eventDisplay"></span></b>.</p>
+
+            <p class="text-secondary pulse-text mt-4">Waiting for payment confirmation...</p>
+            <p class="text-secondary" style="font-size:0.8rem;" id="timerText">02:00</p>
+            
+            <div id="errorBox" class="text-danger mt-3 d-none">
+                <p>Payment failed or was cancelled.</p>
+                <button class="btn btn-outline-danger mt-2" onclick="window.history.back()">Go Back</button>
+            </div>
+        </div>
+
+        <!-- OFFLINE MOCK MODE -->
+        <div id="offlineMock" class="waiting-box d-none" style="padding: 2rem;">
+            <h2 class="mb-1 text-success">Simulated M-Pesa</h2>
+            <p class="text-secondary mb-3">You are in local development mode.</p>
+
+            <div class="phone-mock">
+                <div class="phone-header">M-PESA</div>
+                <p style="font-size:1.1rem; line-height:1.4;">Do you want to pay KES <span id="mockAmount" class="text-success font-weight-bold"></span> to MyTicket for account <span id="mockEvent" style="color:#aaa;"></span>?</p>
+                
+                <div class="mt-4 mb-3">
+                    <label style="color:#aaa; font-size:0.9rem;">Enter M-PESA PIN</label>
+                    <input type="password" class="form-control" style="background:#333; color:white; border:none; border-bottom:2px solid #28a745; border-radius:0; width:100px; text-align:center;" value="1234">
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-top:2rem;">
+                    <button class="btn btn-secondary btn-sm" onclick="window.history.back()">Cancel</button>
+                    <button class="btn btn-success btn-sm" id="btnMockConfirm" onclick="confirmMockPayment()">OK</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const txnId = urlParams.get('txn');
+        let pollInterval;
+        let timeLeft = 120; // 2 minutes
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!txnId) {
+                document.body.innerHTML = "<h2 class='text-center mt-5'>Transaction ID missing.</h2>";
+                return;
+            }
+
+            if (txnId.startsWith('MOCK')) {
+                // Offline mock flow
+                document.getElementById('offlineMock').classList.remove('d-none');
+                try {
+                    const details = await api.get(`/api/payments/mock-details?txn=${txnId}`);
+                    document.getElementById('mockAmount').textContent = details.amount;
+                    document.getElementById('mockEvent').textContent = details.eventTitle.substring(0, 15)+'...';
+                } catch(e) { console.error(e); }
+            } else {
+                // Online polling flow
+                document.getElementById('onlineWaiting').classList.remove('d-none');
+                try {
+                    const details = await api.get(`/api/payments/stk-details?txn=${txnId}`);
+                    document.getElementById('amountDisplay').textContent = `KES ${details.amount}`;
+                    document.getElementById('eventDisplay').textContent = details.eventTitle;
+                    
+                    // Start polling
+                    pollInterval = setInterval(pollStatus, 3000);
+                    // Start timer
+                    setInterval(updateTimer, 1000);
+                } catch(e) { console.error("Could not fetch details", e); }
+            }
+        });
+
+        async function pollStatus() {
+            try {
+                const res = await api.get(`/api/payments/stk-status?txn=${txnId}`);
+                console.log("Status:", res.status);
+                
+                // Expecting PENDING, CONFIRMED, or FAILED (based on PaymentController logic returning map)
+                if (res.status === 'CONFIRMED') {
+                    clearInterval(pollInterval);
+                    
+                    // We need the ticket code! The stk-status endpoint currently doesn't return the ticket code.
+                    // But we can just direct to booking flow, and let the backend return it via tickets/my
+                    // Wait, the confirmation page expects the code. 
+                    // Let's pass txn in query, or assume backend verified.
+                    window.location.href = `/booking-flow.html#confirmation`;
+                } else if (res.status === 'FAILED' || res.status === 'CANCELLED') {
+                    clearInterval(pollInterval);
+                    document.querySelector('.spinner').style.display = 'none';
+                    document.querySelector('.pulse-text').style.display = 'none';
+                    document.getElementById('errorBox').classList.remove('d-none');
+                }
+            } catch (e) {
+                console.error("Polling error", e);
+            }
+        }
+
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                clearInterval(pollInterval);
+                document.getElementById('timerText').textContent = "Timeout.";
+                document.getElementById('errorBox').innerHTML = "<p>Payment confirmation timed out.</p><button class='btn btn-secondary mt-2' onclick='window.history.back()'>Go Back</button>";
+                document.getElementById('errorBox').classList.remove('d-none');
+                return;
+            }
+            timeLeft--;
+            const m = Math.floor(timeLeft / 60);
+            const s = timeLeft % 60;
+            document.getElementById('timerText').textContent = `0${m}:${s<10?'0':''}${s}`;
+        }
+
+        async function confirmMockPayment() {
+            const btn = document.getElementById('btnMockConfirm');
+            btn.disabled = true;
+            btn.textContent = "Processing...";
+            try {
+                await api.post(`/api/payments/mock-confirm?txn=${txnId}`);
+                window.location.href = '/booking-flow.html#confirmation';
+            } catch (e) {
+                alert("Mock confirm failed: " + e.message);
+                btn.disabled = false;
+                btn.textContent = "OK";
+            }
+        }
+    </script>
+</body>
+</html>
