@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.myticket.desktop.controller.EventFormController"
+            fitToWidth="true" style="-fx-background-color: #f0f2f5;">
+
+    <VBox spacing="20" style="-fx-padding: 24;">
+
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <Button text="← Back" styleClass="btn-secondary" onAction="#onBack"/>
+            <Label fx:id="formTitle" text="Create Event" styleClass="section-header"/>
+        </HBox>
+
+        <!-- Section 1: Basic Info -->
+        <VBox styleClass="form-pane" spacing="12">
+            <Label text="Basic Information" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <Label text="Title"/>
+            <TextField fx:id="titleField" promptText="Event title" maxWidth="500"/>
+
+            <Label text="Description"/>
+            <TextArea fx:id="descriptionField" promptText="Event description" prefRowCount="4" maxWidth="500"/>
+
+            <Label text="Category"/>
+            <ChoiceBox fx:id="categoryChoice" maxWidth="300"/>
+
+            <Label text="Venue"/>
+            <TextField fx:id="venueField" promptText="Event venue" maxWidth="500"/>
+
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <VBox spacing="4">
+                    <Label text="Event Date"/>
+                    <DatePicker fx:id="eventDatePicker"/>
+                </VBox>
+                <VBox spacing="4">
+                    <Label text="Time (HH:mm)"/>
+                    <TextField fx:id="eventTimeField" promptText="18:00" prefWidth="100"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <VBox spacing="4">
+                    <Label text="Total Capacity"/>
+                    <Spinner fx:id="capacitySpinner" prefWidth="120"/>
+                </VBox>
+                <VBox spacing="4">
+                    <Label text="Minimum Age (0 = none)"/>
+                    <Spinner fx:id="minAgeSpinner" prefWidth="100"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- Section 2: Ticket Tiers -->
+        <VBox styleClass="form-pane" spacing="12">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Label text="Ticket Tiers" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Add Tier" styleClass="btn-secondary" onAction="#onAddTier"/>
+            </HBox>
+            <VBox fx:id="tiersContainer" spacing="8"/>
+        </VBox>
+
+        <!-- Section 3: Media -->
+        <VBox styleClass="form-pane" spacing="12">
+            <Label text="Media" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="Choose Banner Image" styleClass="btn-secondary" onAction="#onChooseBanner"/>
+                <Label fx:id="bannerFileName" text="No file selected" styleClass="stat-label"/>
+            </HBox>
+            <ImageView fx:id="bannerPreview" fitWidth="200" preserveRatio="true"/>
+        </VBox>
+
+        <!-- Section 4: Performers -->
+        <VBox styleClass="form-pane" spacing="12">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <Label text="Performers" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Add Performer" styleClass="btn-secondary" onAction="#onAddPerformer"/>
+            </HBox>
+            <VBox fx:id="performersContainer" spacing="8"/>
+        </VBox>
+
+        <!-- Section 5: Actions -->
+        <VBox styleClass="form-pane" spacing="12">
+            <Label fx:id="errorLabel" styleClass="error-label" visible="false" managed="false" wrapText="true"/>
+
+            <HBox spacing="12">
+                <Button text="Preview" styleClass="btn-secondary" onAction="#onPreview"/>
+                <Button fx:id="publishButton" text="Publish Event" styleClass="btn-primary" onAction="#onPublish"/>
+            </HBox>
+        </VBox>
+
+    </VBox>
+</ScrollPane>

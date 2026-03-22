@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.myticket.desktop.controller.DashboardController"
+            styleClass="root">
+
+    <!-- ── LEFT: Sidebar ── -->
+    <left>
+        <VBox styleClass="sidebar" spacing="2">
+            <Label text="🎫 MyTicket" styleClass="sidebar-title"/>
+            <Button fx:id="navDashboard" text="📊  Dashboard" styleClass="sidebar-item-active" onAction="#onNavDashboard"/>
+            <Button fx:id="navMyEvents" text="📅  My Events" styleClass="sidebar-item" onAction="#onNavMyEvents"/>
+            <Button fx:id="navCreateEvent" text="➕  Create Event" styleClass="sidebar-item" onAction="#onNavCreateEvent"/>
+            <Button fx:id="navScanner" text="📷  Scanner" styleClass="sidebar-item" onAction="#onNavScanner"/>
+            <Button fx:id="navAnalytics" text="📈  Analytics" styleClass="sidebar-item" onAction="#onNavAnalytics"/>
+            <Button fx:id="navProfile" text="👤  My Profile" styleClass="sidebar-item" onAction="#onNavProfile"/>
+            <Button fx:id="navAdmin" text="🔧  Admin Panel" styleClass="sidebar-item" onAction="#onNavAdmin" visible="false" managed="false"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="🚪  Logout" styleClass="sidebar-logout" onAction="#onLogout"/>
+        </VBox>
+    </left>
+
+    <!-- ── TOP: Topbar ── -->
+    <top>
+        <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="12">
+            <Label fx:id="pageTitle" text="Dashboard" styleClass="topbar-title" HBox.hgrow="ALWAYS"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <StackPane>
+                <Button fx:id="bellButton" text="🔔" styleClass="bell-button" onAction="#onBellClick"/>
+                <Label fx:id="badgeLabel" text="0" styleClass="badge" mouseTransparent="true" visible="false"/>
+            </StackPane>
+            <Label fx:id="userEmailLabel" text="user@maseno.ac.ke" styleClass="status-text"/>
+        </HBox>
+    </top>
+
+    <!-- ── CENTER: swappable content ── -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 20;">
+            <!-- Default: dashboard pane (built programmatically) -->
+        </StackPane>
+    </center>
+
+</BorderPane>

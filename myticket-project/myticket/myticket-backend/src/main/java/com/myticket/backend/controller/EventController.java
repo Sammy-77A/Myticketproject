@@ -67,8 +67,9 @@ public class EventController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long organizerId,
             Pageable pageable) {
-        Page<Event> events = eventService.listEvents(category, status, search, pageable);
+        Page<Event> events = eventService.listEvents(category, status, search, organizerId, pageable);
         return ResponseEntity.ok(events);
     }
 

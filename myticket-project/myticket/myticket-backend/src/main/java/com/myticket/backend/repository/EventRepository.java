@@ -36,4 +36,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByEventDateBetweenAndStatus(LocalDateTime start, LocalDateTime end, EventStatus status);
 
     long countByStatus(EventStatus status);
+
+    org.springframework.data.domain.Page<Event> findByOrganizerId(Long organizerId, Pageable pageable);
 }

@@ -134,15 +134,7 @@ public class LoginController {
     }
 
     private void navigateToDashboard() {
-        // Placeholder — will be replaced in Phase 11 with role-based dashboard
-        Platform.runLater(() -> {
-            // For now, just show a simple confirmation
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Login Successful");
-            alert.setHeaderText(null);
-            alert.setContentText("Welcome, " + SessionManager.getInstance().getUserEmail() + "!\nRole: " + SessionManager.getInstance().getRole());
-            alert.showAndWait();
-        });
+        Platform.runLater(() -> SceneManager.getInstance().navigateTo("/fxml/dashboard.fxml"));
     }
 
     private void checkServerStatus() {

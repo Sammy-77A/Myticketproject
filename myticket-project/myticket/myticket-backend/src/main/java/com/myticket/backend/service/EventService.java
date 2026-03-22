@@ -239,7 +239,10 @@ public class EventService {
                 .build();
     }
 
-    public Page<Event> listEvents(String categoryId, String status, String search, Pageable pageable) {
+    public Page<Event> listEvents(String categoryId, String status, String search, Long organizerId, Pageable pageable) {
+        if (organizerId != null) {
+            return eventRepository.findByOrganizerId(organizerId, pageable);
+        }
         if (search != null && !search.isEmpty()) {
             return eventRepository.searchEvents(search, pageable);
         } else if (categoryId != null && !categoryId.isEmpty() && status != null && !status.isEmpty()) {
