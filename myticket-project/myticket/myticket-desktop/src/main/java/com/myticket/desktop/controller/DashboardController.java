@@ -33,7 +33,7 @@ public class DashboardController {
     @FXML private Label userEmailLabel;
     @FXML private Button bellButton;
     @FXML private Label badgeLabel;
-    @FXML private Button navDashboard, navMyEvents, navCreateEvent, navScanner, navAnalytics, navProfile, navAdmin;
+    @FXML private Button navDashboard, navMyEvents, navCreateEvent, navScanner, navAnalytics, navProfile, navAdmin, navSettings;
 
     private Button activeNav;
     private ScheduledExecutorService notificationPoller;
@@ -70,10 +70,11 @@ public class DashboardController {
     @FXML private void onNavDashboard()   { switchNav(navDashboard, "Dashboard"); loadDashboardPane(); }
     @FXML private void onNavMyEvents()    { switchNav(navMyEvents, "My Events"); loadDashboardPane(); }
     @FXML private void onNavCreateEvent() { switchNav(navCreateEvent, "Create Event"); loadEventForm(null); }
-    @FXML private void onNavScanner()     { switchNav(navScanner, "Scanner"); loadPlaceholder("Scanner — Coming Soon"); }
-    @FXML private void onNavAnalytics()   { switchNav(navAnalytics, "Analytics"); loadPlaceholder("Analytics — Coming Soon"); }
+    @FXML private void onNavScanner()     { switchNav(navScanner, "Scanner"); loadFxmlPane("/fxml/scanner.fxml"); }
+    @FXML private void onNavAnalytics()   { switchNav(navAnalytics, "Analytics"); loadFxmlPane("/fxml/analytics.fxml"); }
     @FXML private void onNavProfile()     { switchNav(navProfile, "My Profile"); loadProfilePane(); }
-    @FXML private void onNavAdmin()       { switchNav(navAdmin, "Admin Panel"); loadPlaceholder("Admin Panel — Coming Soon"); }
+    @FXML private void onNavAdmin()       { switchNav(navAdmin, "Admin Panel"); loadFxmlPane("/fxml/admin.fxml"); }
+    @FXML private void onNavSettings()    { switchNav(navSettings, "Settings"); loadSettingsPane(); }
 
     @FXML
     private void onLogout() {
@@ -503,6 +504,148 @@ public class DashboardController {
                 statusLabel.setVisible(true);
             }));
             runBackground(saveTask);
+        });
+    }
+
+    // ── FXML sub-pane loader ──
+
+    private void loadFxmlPane(String fxmlPath) {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource(fxmlPath));
+            javafx.scene.Parent pane = loader.load();
+            contentArea.getChildren().setAll(pane);
+        } catch (Exception e) {
+            System.err.println("Failed to load " + fxmlPath + ": " + e.getMessage());
+            loadPlaceholder("Could not load screen.");
+        }
+    }
+
+    // ── Settings Pane ──
+
+    private void loadSettingsPane() {
+        VBox settingsPane = new VBox(16);
+        settingsPane.setAlignment(Pos.TOP_CENTER);
+        settingsPane.setPadding(new Insets(20));
+
+        // Profile card
+        VBox profileCard = new VBox(12);
+        profileCard.getStyleClass().add("profile-card");
+        profileCard.setAlignment(Pos.CENTER_LEFT);
+
+        Label header = new Label("Account Settings");
+        header.getStyleClass().add("section-header");
+
+        TextField nameField = new TextField();
+        nameField.setPromptText("Full Name");
+        Label emailLabel = new Label("Email: " + SessionManager.getInstance().getUserEmail());
+        emailLabel.getStyleClass().add("stat-label");
+        Label roleLabel = new Label("Role: " + SessionManager.getInstance().getRole());
+        roleLabel.getStyleClass().add("stat-label");
+
+        Button saveProfileBtn = new Button("Save Profile");
+        saveProfileBtn.getStyleClass().add("btn-primary");
+        Label profileStatus = new Label();
+        profileStatus.setVisible(false);
+
+        profileCard.getChildren().addAll(header, new Label("Full Name"), nameField, emailLabel, roleLabel, saveProfileBtn, profileStatus);
+
+        // Change password card
+        VBox pwCard = new VBox(12);
+        pwCard.getStyleClass().add("profile-card");
+        pwCard.setAlignment(Pos.CENTER_LEFT);
+
+        Label pwHeader = new Label("Change Password");
+        pwHeader.getStyleClass().add("section-header");
+
+        PasswordField currentPw = new PasswordField();
+        currentPw.setPromptText("Current password");
+        PasswordField newPw = new PasswordField();
+        newPw.setPromptText("New password");
+        PasswordField confirmPw = new PasswordField();
+        confirmPw.setPromptText("Confirm new password");
+
+        Button changePwBtn = new Button("Change Password");
+        changePwBtn.getStyleClass().add("btn-primary");
+        Label pwStatus = new Label();
+        pwStatus.setVisible(false);
+
+        pwCard.getChildren().addAll(pwHeader, new Label("Current Password"), currentPw, new Label("New Password"), newPw, new Label("Confirm Password"), confirmPw, changePwBtn, pwStatus);
+
+        // Logout
+        Button logoutBtn = new Button("🚪 Logout");
+        logoutBtn.getStyleClass().add("btn-danger");
+        logoutBtn.setOnAction(e -> onLogout());
+
+        settingsPane.getChildren().addAll(profileCard, pwCard, logoutBtn);
+        contentArea.getChildren().setAll(settingsPane);
+
+        // Load current user
+        Task<Map<String, Object>> loadTask = new Task<>() {
+            @Override
+            protected Map<String, Object> call() throws Exception {
+                return ApiClient.getInstance().get("/api/users/me", Map.class);
+            }
+        };
+        loadTask.setOnSucceeded(e -> {
+            Map<String, Object> user = loadTask.getValue();
+            Platform.runLater(() -> nameField.setText(str(user, "fullName")));
+        });
+        runBackground(loadTask);
+
+        // Save profile
+        saveProfileBtn.setOnAction(e -> {
+            Map<String, String> body = new HashMap<>();
+            body.put("fullName", nameField.getText());
+            Task<Void> saveTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    ApiClient.getInstance().put("/api/users/me", body, Map.class);
+                    return null;
+                }
+            };
+            saveTask.setOnSucceeded(ev -> Platform.runLater(() -> {
+                profileStatus.setStyle("-fx-text-fill: #28a745;");
+                profileStatus.setText("Profile saved!");
+                profileStatus.setVisible(true);
+            }));
+            saveTask.setOnFailed(ev -> Platform.runLater(() -> {
+                profileStatus.setStyle("-fx-text-fill: #dc3545;");
+                profileStatus.setText("Save failed.");
+                profileStatus.setVisible(true);
+            }));
+            runBackground(saveTask);
+        });
+
+        // Change password
+        changePwBtn.setOnAction(e -> {
+            if (!newPw.getText().equals(confirmPw.getText())) {
+                pwStatus.setStyle("-fx-text-fill: #dc3545;");
+                pwStatus.setText("Passwords do not match.");
+                pwStatus.setVisible(true);
+                return;
+            }
+            Map<String, String> body = new HashMap<>();
+            body.put("oldPassword", currentPw.getText());
+            body.put("newPassword", newPw.getText());
+            Task<Void> pwTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    ApiClient.getInstance().put("/api/auth/change-password", body, Map.class);
+                    return null;
+                }
+            };
+            pwTask.setOnSucceeded(ev -> Platform.runLater(() -> {
+                pwStatus.setStyle("-fx-text-fill: #28a745;");
+                pwStatus.setText("Password changed!");
+                pwStatus.setVisible(true);
+                currentPw.clear(); newPw.clear(); confirmPw.clear();
+            }));
+            pwTask.setOnFailed(ev -> Platform.runLater(() -> {
+                pwStatus.setStyle("-fx-text-fill: #dc3545;");
+                pwStatus.setText("Password change failed.");
+                pwStatus.setVisible(true);
+            }));
+            runBackground(pwTask);
         });
     }
 

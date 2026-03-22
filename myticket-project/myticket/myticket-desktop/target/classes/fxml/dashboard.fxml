@@ -21,6 +21,7 @@
             <Button fx:id="navAnalytics" text="📈  Analytics" styleClass="sidebar-item" onAction="#onNavAnalytics"/>
             <Button fx:id="navProfile" text="👤  My Profile" styleClass="sidebar-item" onAction="#onNavProfile"/>
             <Button fx:id="navAdmin" text="🔧  Admin Panel" styleClass="sidebar-item" onAction="#onNavAdmin" visible="false" managed="false"/>
+            <Button fx:id="navSettings" text="⚙️  Settings" styleClass="sidebar-item" onAction="#onNavSettings"/>
             <Region VBox.vgrow="ALWAYS"/>
             <Button text="🚪  Logout" styleClass="sidebar-logout" onAction="#onLogout"/>
         </VBox>

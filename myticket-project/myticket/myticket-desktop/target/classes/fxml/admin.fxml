@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns="http://javafx.com/javafx/21"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:id="tabPane"
+         fx:controller="com.myticket.desktop.controller.AdminPanelController"
+         tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: #f0f2f5;">
+
+    <!-- Tab 1: Users -->
+    <Tab text="👥 Users">
+        <VBox spacing="8" style="-fx-padding: 12;">
+            <TableView fx:id="usersTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="userEmailCol" text="Email" prefWidth="200"/>
+                    <TableColumn fx:id="userNameCol" text="Name" prefWidth="160"/>
+                    <TableColumn fx:id="userRoleCol" text="Role" prefWidth="100"/>
+                    <TableColumn fx:id="userVerifiedCol" text="Verified" prefWidth="70"/>
+                    <TableColumn fx:id="userCreatedCol" text="Created" prefWidth="140"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </Tab>
+
+    <!-- Tab 2: Audit Log -->
+    <Tab text="📋 Audit Log">
+        <VBox spacing="8" style="-fx-padding: 12;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Action:"/>
+                <TextField fx:id="auditFilterAction" promptText="Filter by action" prefWidth="150"/>
+                <Label text="Actor:"/>
+                <TextField fx:id="auditFilterActor" promptText="Filter by email" prefWidth="150"/>
+                <Button text="Filter" styleClass="btn-secondary" onAction="#onFilterAudit"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Load More" styleClass="btn-secondary" onAction="#onLoadMoreAudit"/>
+            </HBox>
+            <TableView fx:id="auditTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="auditTimestampCol" text="Timestamp" prefWidth="160"/>
+                    <TableColumn fx:id="auditActorCol" text="Actor" prefWidth="180"/>
+                    <TableColumn fx:id="auditActionCol" text="Action" prefWidth="140"/>
+                    <TableColumn fx:id="auditEntityCol" text="Entity" prefWidth="100"/>
+                    <TableColumn fx:id="auditDetailCol" text="Detail" prefWidth="200"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </Tab>
+
+    <!-- Tab 3: Subscribers -->
+    <Tab text="📧 Subscribers">
+        <VBox spacing="8" style="-fx-padding: 12;">
+            <Label fx:id="subCountLabel" text="Total: —" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="subscribersTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="subEmailCol" text="Email" prefWidth="280"/>
+                    <TableColumn fx:id="subDateCol" text="Subscribed At" prefWidth="180"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </Tab>
+</TabPane>

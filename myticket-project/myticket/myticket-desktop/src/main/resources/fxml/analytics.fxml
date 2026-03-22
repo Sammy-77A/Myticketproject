@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.myticket.desktop.controller.AnalyticsScreenController"
+            fitToWidth="true" style="-fx-background-color: #f0f2f5;">
+
+    <VBox spacing="16" style="-fx-padding: 20;">
+
+        <!-- Event selector -->
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <Label text="Event:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <ChoiceBox fx:id="eventSelector" prefWidth="300"/>
+            <Button fx:id="loadButton" text="Load Analytics" styleClass="btn-primary" onAction="#onLoad"/>
+        </HBox>
+
+        <Separator/>
+
+        <!-- Charts area -->
+        <VBox fx:id="chartsContainer" spacing="16">
+            <Label text="Select an event and click Load." style="-fx-font-size: 14px; -fx-text-fill: #6c757d;"/>
+        </VBox>
+
+        <!-- Summary stats bar -->
+        <HBox fx:id="summaryBar" spacing="12" alignment="CENTER_LEFT"/>
+
+    </VBox>
+</ScrollPane>

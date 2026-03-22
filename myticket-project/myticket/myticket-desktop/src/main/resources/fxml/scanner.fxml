@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.myticket.desktop.controller.ScannerController"
+      spacing="16" style="-fx-padding: 20; -fx-background-color: #f0f2f5;">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <Label text="Event:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <ChoiceBox fx:id="eventSelector" prefWidth="300"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="counterLabel" text="Checked In: 0 / —"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Main split -->
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
+
+        <!-- LEFT: Input -->
+        <VBox spacing="12" alignment="TOP_CENTER" HBox.hgrow="ALWAYS"
+              style="-fx-background-color: #ffffff; -fx-background-radius: 12; -fx-padding: 24;"
+              prefWidth="400">
+            <Label text="Scan or type ticket code"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1a1a2e;"/>
+            <TextField fx:id="ticketCodeField" promptText="Enter ticket code..."
+                       style="-fx-font-size: 18px; -fx-pref-height: 52; -fx-background-radius: 8;"/>
+            <HBox spacing="8" alignment="CENTER">
+                <Button fx:id="verifyButton" text="✔ Verify" styleClass="btn-primary"
+                        onAction="#onVerify" prefWidth="160" prefHeight="44"/>
+                <Button text="Clear" styleClass="btn-secondary" onAction="#onClear" prefWidth="100"/>
+            </HBox>
+        </VBox>
+
+        <!-- RIGHT: Result -->
+        <VBox fx:id="resultPanel" spacing="8" alignment="CENTER" HBox.hgrow="ALWAYS"
+              prefWidth="300" style="-fx-padding: 12;">
+            <!-- Populated programmatically -->
+        </VBox>
+
+    </HBox>
+</VBox>
