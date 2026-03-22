@@ -1,0 +1,4 @@
+com\myticket\backend\config\SQLiteConfig.class
+com\myticket\backend\config\SecurityConfig.class
+com\myticket\backend\MyTicketApplication.class
+com\myticket\backend\controller\HealthController.class
