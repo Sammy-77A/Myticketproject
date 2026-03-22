@@ -1,0 +1,19 @@
+package com.myticket.backend.repository;
+
+import com.myticket.backend.model.Waitlist;
+import com.myticket.common.enums.WaitlistStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface WaitlistRepository extends JpaRepository<Waitlist, Long> {
+
+    List<Waitlist> findByEventIdAndStatusOrderByJoinedAtAsc(Long eventId, WaitlistStatus status);
+
+    Optional<Waitlist> findByUserIdAndEventId(Long userId, Long eventId);
+
+    long countByEventIdAndStatus(Long eventId, WaitlistStatus status);
+}
