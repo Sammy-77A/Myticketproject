@@ -45,4 +45,7 @@ public class TicketTier {
     private boolean isEarlyBird = false;
 
     private LocalDateTime closesAt;
+    
+    @Builder.Default
+    private boolean isExpired = false;
 }

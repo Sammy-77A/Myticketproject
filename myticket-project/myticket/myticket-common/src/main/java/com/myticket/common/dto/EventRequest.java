@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -41,4 +42,6 @@ public class EventRequest {
     private boolean isDraft;
 
     private String bannerImagePath;
+
+    private List<TicketTierRequest> tiers;
 }

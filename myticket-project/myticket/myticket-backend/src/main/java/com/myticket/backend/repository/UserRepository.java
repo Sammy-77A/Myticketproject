@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByReferralCode(String referralCode);
     Optional<User> findByGoogleId(String googleId);
     boolean existsByEmail(String email);
+
+    @org.springframework.data.jpa.repository.Query(value = "SELECT COUNT(*) FROM user_follows WHERE following_id = :organizerId", nativeQuery = true)
+    long countFollowers(@org.springframework.data.repository.query.Param("organizerId") Long organizerId);
 }

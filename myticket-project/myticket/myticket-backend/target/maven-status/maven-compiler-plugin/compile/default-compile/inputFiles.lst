@@ -1,12 +1,18 @@
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\config\SchedulingConfig.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\config\SecurityConfig.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\config\SQLiteConfig.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\config\WebMvcConfig.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\AuthController.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\CategoryController.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\EventController.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\HealthController.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\controller\OrganizerController.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\AuditLog.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Category.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Comment.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Event.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Notification.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Performer.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Reaction.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Subscriber.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\model\Ticket.java
@@ -20,6 +26,7 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backen
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\CommentRepository.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\EventRepository.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\NotificationRepository.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\PerformerRepository.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\ReactionRepository.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\SubscriberRepository.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\repository\TicketRepository.java
@@ -35,7 +42,10 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backen
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\AuthService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\CaptchaService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\EmailService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\EventService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\FileStorageService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\HCaptchaService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\MockCaptchaService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\MockEmailService.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\SmtpEmailService.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-backend\src\main\java\com\myticket\backend\service\TicketTierService.java

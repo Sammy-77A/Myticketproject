@@ -20,4 +20,5 @@ public class TicketTierResponse {
     private String perks;
     private boolean isEarlyBird;
     private LocalDateTime closesAt;
+    private String dealScore;
 }

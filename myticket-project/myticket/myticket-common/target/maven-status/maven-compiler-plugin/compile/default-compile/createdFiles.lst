@@ -6,6 +6,7 @@ com\myticket\common\dto\RegisterRequest$RegisterRequestBuilder.class
 com\myticket\common\dto\ReviewResponse.class
 com\myticket\common\enums\NotificationType.class
 com\myticket\common\dto\CommentRequest.class
+com\myticket\common\dto\OrganizerProfileResponse$OrganizerProfileResponseBuilder.class
 com\myticket\common\dto\ReactionRequest$ReactionRequestBuilder.class
 com\myticket\common\dto\TicketTierResponse.class
 com\myticket\common\dto\ReviewRequest.class
@@ -13,6 +14,7 @@ com\myticket\common\dto\WaitlistResponse$WaitlistResponseBuilder.class
 com\myticket\common\dto\LoginRequest.class
 com\myticket\common\enums\ReactionType.class
 com\myticket\common\dto\AnalyticsOverviewResponse$AnalyticsOverviewResponseBuilder.class
+com\myticket\common\dto\TicketTierRequest.class
 com\myticket\common\dto\ReviewRequest$ReviewRequestBuilder.class
 com\myticket\common\dto\ReviewResponse$ReviewResponseBuilder.class
 com\myticket\common\dto\TicketResponse$TicketResponseBuilder.class
@@ -20,6 +22,7 @@ com\myticket\common\dto\CommentResponse$CommentResponseBuilder.class
 com\myticket\common\dto\TicketResponse.class
 com\myticket\common\dto\BookingRequest$BookingRequestBuilder.class
 com\myticket\common\dto\EventRequest.class
+com\myticket\common\dto\TicketTierRequest$TicketTierRequestBuilder.class
 com\myticket\common\dto\EventAnalyticsResponse.class
 com\myticket\common\dto\AuthResponse.class
 com\myticket\common\dto\PaymentResponse$PaymentResponseBuilder.class
@@ -28,6 +31,7 @@ com\myticket\common\package-info.class
 com\myticket\common\dto\CommentRequest$CommentRequestBuilder.class
 com\myticket\common\dto\CommentResponse.class
 com\myticket\common\dto\RegisterRequest.class
+com\myticket\common\dto\OrganizerProfileResponse.class
 com\myticket\common\dto\BookingRequest.class
 com\myticket\common\enums\TicketStatus.class
 com\myticket\common\enums\WaitlistStatus.class

@@ -7,12 +7,14 @@ C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\EventRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\EventResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\LoginRequest.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\OrganizerProfileResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\PaymentResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\ReactionRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\RegisterRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\ReviewRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\ReviewResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\TicketResponse.java
+C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\TicketTierRequest.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\TicketTierResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\dto\WaitlistResponse.java
 C:\Users\sam\Documents\Myticketproject\myticket-project\myticket\myticket-common\src\main\java\com\myticket\common\enums\EventStatus.java

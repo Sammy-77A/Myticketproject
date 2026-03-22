@@ -31,4 +31,6 @@ public class EventResponse {
     private Long categoryId;
     private LocalDateTime createdAt;
     private List<TicketTierResponse> tiers;
+    private long reactionCounts;
+    private int remainingCapacity;
 }
